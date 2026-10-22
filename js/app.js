@@ -160,7 +160,7 @@ function ticket() {
   const { d, t, v } = slot, dl = dlabel(d.date), [h, m] = t.time.split(':').map(Number), p = n => String(n).padStart(2, '0'), day = d.date.replace(/-/g, ''), end = h * 60 + m + 90;
   const cal = 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Asia/Kolkata&text=' + encodeURIComponent('Site visit: Shiv Kailasa') + '&dates=' + day + 'T' + p(h) + p(m) + '00/' + day + 'T' + p(Math.floor(end / 60)) + p(end % 60) + '00&location=' + encodeURIComponent('Shiv Kailasa, MIHAN, Nagpur (opp. AIIMS & IIM)') + '&details=' + encodeURIComponent('Booking ' + L.ref);
   const text = ['Hello Shiv Kailasa Team,', 'I am interested in Shiv Kailasa properties.', 'Name: ' + S.name, 'Interested in: ' + (val('why') || val('bhk')), 'Home: ' + val('bhk'), 'Purpose: ' + val('purpose'), 'Budget: ' + val('budget'), 'Preferred Visit: ' + dl + ', ' + t.label, 'Booking: ' + L.ref, 'Please contact me regarding the property.'].join('\n');
-  // WhatsApp number: works with 10-digit (9022142587) or 12-digit (919022142587).
+  // WhatsApp number: works with 10-digit (7972096750) or 12-digit (917972096750).
   let num = String(CFG.WHATSAPP || '').replace(/\D/g, '');
   if (num.length === 10) num = '91' + num;
   const wa = 'https://wa.me/' + num + '?text=' + encodeURIComponent(text);
