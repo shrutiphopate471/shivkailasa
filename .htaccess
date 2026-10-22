@@ -1,0 +1,14 @@
+Options -Indexes
+RewriteEngine On
+# HTTPS on the live site (skipped on localhost)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Never serve project internals
+RewriteRule ^(database|scss|node_modules)(/|$) - [F]
+RewriteRule ^(package(-lock)?\.json|README\.md|\.gitignore)$ - [F]
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
