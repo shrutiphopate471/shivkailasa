@@ -20,6 +20,13 @@ HTML + SCSS + vanilla JS front end, PHP + MySQL backend. Ek enquiry = ek `leads`
 3. Config ko `public_html` ke bahar `~/sk-config.php` naam se rakhein (ya `api/config.php`), `salt` badlein, `allowed_origin` apna domain karein.
 4. AutoSSL se HTTPS on karein, phir pura funnel live test karein.
 
+## Google Sheet sync (optional)
+Every lead create/update/booking is pushed to a Google Sheet in real time via a Web App webhook.
+1. Create a Google Sheet, open Extensions > Apps Script, paste `google-apps-script/sheet-sync.gs`, set `SECRET`.
+2. Deploy > New deployment > type "Web app" > execute as "Me" > access "Anyone". Copy the `/exec` URL.
+3. In `api/config.php`, set `sheet_webhook_url` to that URL and `sheet_secret` to match. Leave `sheet_webhook_url` blank to disable.
+4. Sync is best-effort: if the webhook is down, the lead still saves (error only goes to the PHP error log).
+
 ## Behaviour notes
 - Lead contact details ke baad banti hai; baaki steps usi lead ko update karte hain. Server har update par `lead_id` + secret token check karta hai.
 - Same mobile number 24 ghante mein dobara aaye to naya row nahi banta, wahi record update hota hai.

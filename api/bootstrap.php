@@ -88,6 +88,84 @@ function lead_auth(array $in): array {
     return $l;
 }
 
+// Best-effort push of one lead row to the Google Sheet webhook. Never throws.
+function sheet_sync(string $leadId): void {
+    $c = cfg();
+    $url = $c['sheet_webhook_url'] ?? '';
+    if (!$url) return;
+    $s = db()->prepare('SELECT * FROM leads WHERE id = ?');
+    $s->execute([$leadId]);
+    $l = $s->fetch();
+    if (!$l) return;
+    $payload = [
+        'secret' => $c['sheet_secret'] ?? '',
+        'id' => $l['id'], 'ref' => lead_ref($l['id']), 'name' => $l['name'], 'phone' => $l['phone'],
+        'email' => $l['email'], 'purpose' => $l['purpose'], 'awareness' => $l['awareness'], 'bhk' => $l['bhk'],
+        'budget' => $l['budget'], 'timeline' => $l['timeline'], 'funding' => $l['funding'],
+        'decision_maker' => $l['decision_maker'], 'attracted' => $l['attracted'], 'score' => $l['score'],
+        'tag' => $l['tag'], 'status' => $l['status'], 'visit_date' => $l['visit_date'],
+        'visit_time' => $l['visit_time'], 'visitors' => $l['visitors'],
+        'created_at' => $l['created_at'], 'updated_at' => $l['updated_at'],
+    ];
+    try {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true, // Apps Script replies with a 302
+            CURLOPT_TIMEOUT => 12,
+        ]);
+        curl_exec($ch);
+        if (curl_errno($ch)) error_log('[shivkailasa] sheet_sync: ' . curl_error($ch));
+        curl_close($ch);
+    } catch (Throwable $e) {
+        error_log('[shivkailasa] sheet_sync: ' . $e);
+    }
+}
+
+// Alerts the owner on WhatsApp when a visit is booked (WhatsApp Cloud API). Never throws.
+function wa_notify(array $lead, string $date, string $time, int $visitors): void {
+    $w = cfg()['wa'] ?? [];
+    if (empty($w['token']) || empty($w['phone_id']) || empty($w['to'])) return;
+    $payload = [
+        'messaging_product' => 'whatsapp',
+        'to' => $w['to'],
+        'type' => 'template',
+        'template' => [
+            'name' => $w['template'] ?? 'new_site_visit',
+            'language' => ['code' => 'en'],
+            'components' => [[
+                'type' => 'body',
+                'parameters' => [
+                    ['type' => 'text', 'text' => (string)$lead['name']],
+                    ['type' => 'text', 'text' => (string)$lead['phone']],
+                    ['type' => 'text', 'text' => $date . ' ' . $time],
+                    ['type' => 'text', 'text' => (string)$visitors],
+                ],
+            ]],
+        ],
+    ];
+    try {
+        $ch = curl_init("https://graph.facebook.com/v20.0/{$w['phone_id']}/messages");
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Authorization: Bearer ' . $w['token']],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 4,
+        ]);
+        $res = curl_exec($ch);
+        $http = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if (curl_errno($ch)) error_log('[shivkailasa] wa_notify: ' . curl_error($ch));
+        elseif ($http >= 400) error_log('[shivkailasa] wa_notify HTTP ' . $http . ': ' . $res);
+        curl_close($ch);
+    } catch (Throwable $e) {
+        error_log('[shivkailasa] wa_notify: ' . $e);
+    }
+}
+
 // Bookable dates: tomorrow onwards, skipping closed weekdays and blocked dates.
 function open_dates(): array {
     $c = cfg();

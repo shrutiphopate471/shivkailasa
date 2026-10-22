@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="utf-8">
@@ -10,164 +10,327 @@
 
 <body>
 
-    <header class="nav"><b>Shiv Kailasa</b><a href="#enquire" class="navbtn">Book a visit</a></header>
+    <header class="nav d-flex justify-content-between align-items-center p-3 bg-body border-bottom sticky-top">
+        <b>Shiv Kailasa</b>
+        <a href="#enquire" class="navbtn btn btn-primary rounded-pill">Book a visit</a>
+    </header>
 
-    <section class="hero">
+    <section class="hero position-relative overflow-hidden text-white py-4 px-3">
 
-        <div class="hgrid">
-            <div>
-                <span class="tag">Opp. AIIMS &amp; IIM · MIHAN, Nagpur</span>
-                <h1 class="big">The address of Nagpur’s next growth story.</h1>
-                <p>A 30-acre residential township on freehold land — exactly opposite AIIMS Nagpur &amp; IIM Nagpur.</p>
-                <div class="prices">
-                    <div><b>₹65L+</b><span>2 BHK</span></div>
-                    <div><b>₹75L+</b><span>3 BHK</span></div>
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+            <source src="images/IMG_4588.MP4" type="video/mp4">
+        </video>
+        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+        <div class="container">
+            <div class="hgrid row g-4 align-items-start">
+                <div class="col-12 col-lg-7">
+                    <span class="tag badge rounded-pill bg-white bg-opacity-25 text-white">Opp. AIIMS &amp; IIM · MIHAN,
+                        Nagpur</span>
+                    <h1 class="big display-5 mt-3 mb-2">The address of Nagpur’s next growth story.</h1>
+                    <p class="mb-0" style="opacity:.92">A 30-acre residential township on freehold land — exactly
+                        opposite AIIMS Nagpur &amp; IIM Nagpur.</p>
+                    <div class="prices d-flex gap-3 my-3">
+                        <div class="bg-white bg-opacity-25 rounded-3 px-3 py-2"><b class="d-block fs-4">₹65L+</b><span
+                                class="small">2 BHK</span></div>
+                        <div class="bg-white bg-opacity-25 rounded-3 px-3 py-2"><b class="d-block fs-4">₹75L+</b><span
+                                class="small">3 BHK</span></div>
+                    </div>
+                    <a href="#enquire" class="cta btn btn-light fw-bold">See if it’s right for you</a>
                 </div>
-                <a href="#enquire" class="cta">See if it’s right for you</a>
-            </div>
 
-            <div class="fcard" id="enquire">
-                <h2 id="ft">Is Shiv Kailasa right for you?</h2>
-                <p class="sub" id="fs">8 quick taps · about 90 seconds</p>
-                <div class="prog">
-                    <div id="bar" style="width:0"></div>
+                <div class="col-12 col-lg-5">
+                    <div class="fcard card shadow-lg p-3" id="enquire">
+                        <h2 class="fs-5 mb-1" id="ft">Is Shiv Kailasa right for you?</h2>
+                        <p class="sub text-secondary small mb-2" id="fs">8 quick taps · about 90 seconds</p>
+                        <div class="progress mb-1" style="height:6px">
+                            <div id="bar" class="progress-bar" style="width:0"></div>
+                        </div>
+                        <div class="stepl text-secondary small mb-2" id="stepl"></div>
+                        <div id="fb"></div>
+                    </div>
                 </div>
-                <div class="stepl" id="stepl"></div>
-                <div id="fb"></div>
             </div>
         </div>
     </section>
 
     <section class="feat">
-        <div><b>30 acres</b><span>Nagpur’s biggest township</span></div>
-        <div><b>60% open</b><span>only 40% built</span></div>
-        <div><b>Freehold</b><span>land ownership</span></div>
-        <div><b>Opp. AIIMS &amp; IIM</b><span>MIHAN, Nagpur</span></div>
+        <div class="container">
+            <div class="  row row-cols-2 row-cols-md-4 g-2 mt-n4 position-relative">
+                <div class="col">
+                    <div class="card text-center p-2 h-100"><b class="d-block">30 acres</b><span
+                            class="small text-secondary">Nagpur’s biggest township</span></div>
+                </div>
+                <div class="col">
+                    <div class="card text-center p-2 h-100"><b class="d-block">60% open</b><span
+                            class="small text-secondary">only 40% built</span></div>
+                </div>
+                <div class="col">
+                    <div class="card text-center p-2 h-100"><b class="d-block">Freehold</b><span
+                            class="small text-secondary">land ownership</span></div>
+                </div>
+                <div class="col">
+                    <div class="card text-center p-2 h-100"><b class="d-block">Opp. AIIMS &amp; IIM</b><span
+                            class="small text-secondary">MIHAN, Nagpur</span></div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="sec">
-        <div class="k">Before you choose a home</div>
-        <h2>Understand the land.</h2>
-        <p>A property is not only the apartment you buy. It is the land beneath it, the location around it, and the
+    <section class="sec container my-5">
+        <div class="k small fw-bold text-uppercase text-primary mb-2">Choose your home</div>
+        <h2 class="fs-2 mb-3">Floor plans for 2 BHK &amp; 3 BHK.</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">FROM ₹65L+</div>
+                    <div class="rounded-3 overflow-hidden mb-3 bg-white">
+                        <img src="images/2bhk1.png" class="img-fluid" alt="2 BHK isometric floor plan, Shiv Kailasa"
+                            loading="lazy">
+                    </div>
+                    <h3 class="h5 mb-1">2 BHK</h3>
+                    <p class="text-secondary small mb-0">Living, dining, kitchen, two bedrooms and a double-height
+                        terrace.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">FROM ₹75L+</div>
+                    <div class="rounded-3 overflow-hidden mb-3 bg-white">
+                        <img src="images/3bhk1.png" class="img-fluid" alt="3 BHK isometric floor plan, Shiv Kailasa"
+                            loading="lazy">
+                    </div>
+                    <h3 class="h5 mb-1">3 BHK</h3>
+                    <p class="text-secondary small mb-0">Master + guest bedrooms, large living/dining and a
+                        double-height terrace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec container my-5">
+        <div class="k small fw-bold text-uppercase text-primary mb-2">Before you choose a home</div>
+        <h2 class="fs-2 mb-3">Understand the land.</h2>
+        <p class="text-secondary">A property is not only the apartment you buy. It is the land beneath it, the location
+            around it, and the
             development coming towards it. Shiv Kailasa stands on freehold land — a significant ownership distinction in
             MIHAN, where many developments are structured on leasehold land.</p>
-        <div class="g3">
-            <div class="c">
-                <div class="n">EXACTLY OPPOSITE</div>
-                <h3>AIIMS Nagpur</h3>
-                <p>Healthcare, medical professionals and the ecosystem around one of Nagpur’s most significant
-                    institutions.</p>
+        <div class="g3 row row-cols-1 row-cols-md-3 g-3 mt-2">
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">EXACTLY OPPOSITE</div>
+                    <h3 class="h5 mb-1">AIIMS Nagpur</h3>
+                    <p class="text-secondary small mb-0">Healthcare, medical professionals and the ecosystem around one
+                        of Nagpur’s most significant
+                        institutions.</p>
+                </div>
             </div>
-            <div class="c">
-                <div class="n">EXACTLY OPPOSITE</div>
-                <h3>IIM Nagpur</h3>
-                <p>A premier institution bringing students, faculty and long-term economic activity into the corridor.
-                </p>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">EXACTLY OPPOSITE</div>
+                    <h3 class="h5 mb-1">IIM Nagpur</h3>
+                    <p class="text-secondary small mb-0">A premier institution bringing students, faculty and long-term
+                        economic activity into the corridor.
+                    </p>
+                </div>
             </div>
-            <div class="c">
-                <div class="n">WITHIN</div>
-                <h3>MIHAN</h3>
-                <p>One of Nagpur’s most important employment, business, technology and infrastructure corridors.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="sec">
-        <div class="k">Why Shiv Kailasa is different</div>
-        <h2>Three reasons it stands apart.</h2>
-        <div class="g3">
-            <div class="c">
-                <div class="n">01</div>
-                <h3>Freehold land</h3>
-                <p>Don’t only ask “What am I buying?” Ask what the ownership structure of the land beneath it is.</p>
-            </div>
-            <div class="c">
-                <div class="n">02</div>
-                <h3>30 acres. 60% open.</h3>
-                <p>Only 40% is used for construction. The township preserves space around its apartments.</p>
-            </div>
-            <div class="c">
-                <div class="n">03</div>
-                <h3>AIIMS + IIM + MIHAN</h3>
-                <p>Healthcare, education, employment and business, connected through Wardha Road.</p>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">WITHIN</div>
+                    <h3 class="h5 mb-1">MIHAN</h3>
+                    <p class="text-secondary small mb-0">One of Nagpur’s most important employment, business, technology
+                        and infrastructure corridors.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="sec">
-        <div class="k">Not just an address</div>
-        <h2>It’s an ecosystem.</h2>
-        <p>Shiv Kailasa is Nagpur’s biggest township, with its own convenience built in. Everyday life doesn’t depend on
+    <section class="sec container my-5">
+        <div class="k small fw-bold text-uppercase text-primary mb-2">Why Shiv Kailasa is different</div>
+        <h2 class="fs-2 mb-3">Three reasons it stands apart.</h2>
+        <div class="g3 row row-cols-1 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">01</div>
+                    <h3 class="h5 mb-1">Freehold land</h3>
+                    <p class="text-secondary small mb-0">Don’t only ask “What am I buying?” Ask what the ownership
+                        structure of the land beneath it is.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">02</div>
+                    <h3 class="h5 mb-1">30 acres. 60% open.</h3>
+                    <p class="text-secondary small mb-0">Only 40% is used for construction. The township preserves space
+                        around its apartments.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">03</div>
+                    <h3 class="h5 mb-1">AIIMS + IIM + MIHAN</h3>
+                    <p class="text-secondary small mb-0">Healthcare, education, employment and business, connected
+                        through Wardha Road.</p>
+                </div>
+            </div>
+        </div>
+        <img src="images/IMG_6628.JPG.jpg" class="img-fluid rounded-4 w-100 object-fit-cover mt-4"
+            style="max-height:420px" alt="Aerial view of Shiv Kailasa township garden and towers" loading="lazy">
+    </section>
+
+    <section class="sec container my-5">
+        <div class="k small fw-bold text-uppercase text-primary mb-2">Not just an address</div>
+        <h2 class="fs-2 mb-3">It’s an ecosystem.</h2>
+        <p class="text-secondary">Shiv Kailasa is Nagpur’s biggest township, with its own convenience built in. Everyday
+            life doesn’t depend on
             crossing the city: the township has its own supermarket and its own commercial complex.</p>
-        <div class="chips"><span>🛒 Alma Mart supermarket</span><span>🏦 SBI bank</span><span>🧪 Pathology
-                lab</span><span>👕 Tumble Dry laundry</span><span>🍛 Biryani</span><span>🍔 Fast food</span><span>🏨
-                Sayaji Group 4-star hotel</span></div>
-        <p style="margin-top:12px">Banking, health tests, laundry, food and a four-star hotel for your guests, all
+        <div class="chips d-flex flex-wrap gap-2 mt-3">
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🛒 Alma Mart
+                supermarket</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🏦 SBI bank</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🧪 Pathology lab</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">👕 Tumble Dry laundry</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🍛 Biryani</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🍔 Fast food</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🏨 Sayaji Group 4-star
+                hotel</span>
+        </div>
+        <p class="text-secondary mt-3">Banking, health tests, laundry, food and a four-star hotel for your guests, all
             within the township’s own commercial complex. Pokreja Business Park and the wider MIHAN business ecosystem
             are close by.</p>
-        <div class="q">Live. Work. Eat. Shop. Stay. Connect.</div>
-        <div class="k" style="margin-top:30px">The community</div>
-        <h2>The people you’ll live among.</h2>
-        <p>A township is also its neighbours. Shiv Kailasa is home to an educated, settled community, and that shapes
-            the everyday lifestyle.</p>
-        <div class="chips"><span>🩺 Doctors</span><span>🏦 Bank officers &amp; bankers</span><span>👩‍⚕️
-                Nurses</span><span>🎖️ Retired government officials from WCL</span><span>🎓 Educated
-                professionals</span></div>
-    </section>
-
-    <div class="band">
-        <section class="sec">
-            <div class="k">The rental &amp; growth story</div>
-            <h2>A home that can also work as an asset.</h2>
-            <div class="g3">
-                <div class="c stat"><b>₹30,000+</b>
-                    <p>Indicative average monthly rental potential; furnished homes can fetch significantly more.</p>
-                </div>
-                <div class="c stat"><b>₹45,000</b>
-                    <p>per month, achieved by an existing 3 BHK owner for a fully furnished residence.</p>
-                </div>
-                <div class="c stat"><b>~25%*</b>
-                    <p>approximate appreciation experienced by existing customers over the last 2 years.</p>
+        <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/pool.png" class="card-img-top object-fit-cover" style="height:200px"
+                        alt="Swimming pool, Shiv Kailasa" loading="lazy">
+                    <div class="card-body p-2 text-center">
+                        <span class="small fw-semibold">🏊 Swimming pool</span>
+                    </div>
                 </div>
             </div>
-            <div class="q">The market has already started recognising the location.</div>
-            <div class="fine">*Based on existing-owner examples. Rent varies by configuration, furnishing, unit, tenant
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/gym.jpg" class="card-img-top object-fit-cover" style="height:200px"
+                        alt="Gymnasium, Shiv Kailasa" loading="lazy">
+                    <div class="card-body p-2 text-center">
+                        <span class="small fw-semibold">🏋️ Fully equipped gym</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="images/IMG_4797.PNG" class="card-img-top object-fit-cover"
+                        style="height:200px;object-position:top" alt="Indoor games room, Shiv Kailasa" loading="lazy">
+                    <div class="card-body p-2 text-center">
+                        <span class="small fw-semibold">🏓 Indoor games</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="q fs-5 fw-semibold border-start border-3 border-primary ps-3 my-3">Live. Work. Eat. Shop. Stay.
+            Connect.</div>
+        <div class="k small fw-bold text-uppercase text-primary mt-4 mb-2">The community</div>
+        <h2 class="fs-2 mb-3">The people you’ll live among.</h2>
+        <p class="text-secondary">A township is also its neighbours. Shiv Kailasa is home to an educated, settled
+            community, and that shapes
+            the everyday lifestyle.</p>
+        <div class="chips d-flex flex-wrap gap-2 mt-3">
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🩺 Doctors</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🏦 Bank officers &amp;
+                bankers</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">👩‍⚕️ Nurses</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🎖️ Retired government
+                officials from WCL</span>
+            <span class="badge rounded-pill bg-body-secondary text-body-emphasis fw-normal">🎓 Educated
+                professionals</span>
+        </div>
+    </section>
+
+    <div class="band bg-body-secondary border-top border-bottom py-5 mt-5">
+        <section class="sec container">
+            <div class="k small fw-bold text-uppercase text-primary mb-2">The rental &amp; growth story</div>
+            <h2 class="fs-2 mb-3">A home that can also work as an asset.</h2>
+            <div class="g3 row row-cols-1 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="c stat card h-100 p-3">
+                        <b class="d-block fs-2 text-primary lh-1">₹30,000+</b>
+                        <p class="text-secondary small mb-0">Indicative average monthly rental potential; furnished
+                            homes can fetch significantly more.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="c stat card h-100 p-3">
+                        <b class="d-block fs-2 text-primary lh-1">₹45,000</b>
+                        <p class="text-secondary small mb-0">per month, achieved by an existing 3 BHK owner for a fully
+                            furnished residence.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="c stat card h-100 p-3">
+                        <b class="d-block fs-2 text-primary lh-1">~25%*</b>
+                        <p class="text-secondary small mb-0">approximate appreciation experienced by existing customers
+                            over the last 2 years.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="q fs-5 fw-semibold border-start border-3 border-primary ps-3 my-3">The market has already
+                started recognising the location.</div>
+            <div class="fine small text-secondary mt-3">*Based on existing-owner examples. Rent varies by configuration,
+                furnishing, unit, tenant
                 and market. Future appreciation is not guaranteed.</div>
         </section>
     </div>
 
-    <section class="sec">
-        <div class="k">This is what makes MIHAN different</div>
-        <h2>Look at what is being built around you.</h2>
-        <div class="g2">
-            <div class="c">
-                <h3>✈️ Airport development</h3>
-                <p>Proposed/ongoing expansion expected to strengthen aviation and connectivity.</p>
+    <section class="sec container my-5">
+        <div class="k small fw-bold text-uppercase text-primary mb-2">This is what makes MIHAN different</div>
+        <h2 class="fs-2 mb-3">Look at what is being built around you.</h2>
+        <div class="g2 row row-cols-1 row-cols-md-2 g-3">
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <h3 class="h5 mb-1">✈️ Airport development</h3>
+                    <p class="text-secondary small mb-0">Proposed/ongoing expansion expected to strengthen aviation and
+                        connectivity.</p>
+                </div>
             </div>
-            <div class="c">
-                <h3>🚇 Metro connectivity</h3>
-                <p>Future improvements expected to make the corridor more accessible.</p>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <h3 class="h5 mb-1">🚇 Metro connectivity</h3>
+                    <p class="text-secondary small mb-0">Future improvements expected to make the corridor more
+                        accessible.</p>
+                </div>
             </div>
-            <div class="c">
-                <h3>🛣️ Wardha Road + Samruddhi</h3>
-                <p>Part of the network linking MIHAN with Wardha Road and Samruddhi Mahamarg.</p>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <h3 class="h5 mb-1">🛣️ Wardha Road + Samruddhi</h3>
+                    <p class="text-secondary small mb-0">Part of the network linking MIHAN with Wardha Road and
+                        Samruddhi Mahamarg.</p>
+                </div>
             </div>
-            <div class="c">
-                <h3>💼 Business + employment</h3>
-                <p>IT, commercial and institutional growth keeps strengthening MIHAN.</p>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <h3 class="h5 mb-1">💼 Business + employment</h3>
+                    <p class="text-secondary small mb-0">IT, commercial and institutional growth keeps strengthening
+                        MIHAN.</p>
+                </div>
             </div>
         </div>
-        <div class="q">Not another promise about the future. Look at what is already here.</div>
+        <div class="q fs-5 fw-semibold border-start border-3 border-primary ps-3 my-3">Not another promise about the
+            future. Look at what is already here.</div>
     </section>
 
-    <footer>
-        <h2>Looking for peace in Nagpur, with better amenities and facilities?</h2>
-        <p style="font-size:1.2rem;font-weight:700">Welcome to MIHAN.</p>
-        <p>Look at the land. The location. What is being built around it. Then look at the apartment.</p>
-        <a href="#enquire" class="cta" style="margin-top:10px">Plan a private site visit</a>
-        <div class="fine">Investment, appreciation and rental figures are based on stated/existing-owner examples and
-            are not guarantees of future returns. All project, ownership, pricing, connectivity and development claims
-            should be published only after verification against current developer/legal documentation.</div>
+    <footer class="py-5 px-3 text-center mt-5">
+        <div class="container">
+            <h2 class="mb-2">Looking for peace in Nagpur, with better amenities and facilities?</h2>
+            <p class="fs-4 fw-bold">Welcome to MIHAN.</p>
+            <p class="mx-auto my-2" style="opacity:.85">Look at the land. The location. What is being built around it.
+                Then look at the apartment.</p>
+            <a href="#enquire" class="cta btn btn-light fw-bold mt-2">Plan a private site visit</a>
+            <div class="fine mx-auto mt-4">Investment, appreciation and rental figures are based on
+                stated/existing-owner examples and
+                are not guarantees of future returns. All project, ownership, pricing, connectivity and development
+                claims
+                should be published only after verification against current developer/legal documentation.</div>
+        </div>
     </footer>
 
     <script src="js/config.js"></script>
