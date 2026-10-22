@@ -12,7 +12,7 @@ function out(array $d, int $code = 200) {
 }
 
 set_exception_handler(function ($e) {
-    error_log('[shiv-kailasa] ' . $e);
+    error_log('[shivkailasa] ' . $e);
     out(['ok' => false, 'error' => 'server_error'], 500);
 });
 
