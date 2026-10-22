@@ -15,8 +15,29 @@ const store = {
   clear() { try { localStorage.removeItem('sk_lead') } catch (e) { } }
 };
 const persist = (done) => { if (L) store.set({ ...L, name: S.name, ans: S.ans, done: !!done }) };
+// async function api(path, body) {
+//   const r = await fetch(`${API}/${path}`, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+//   let j = {}; try { j = await r.json() } catch (e) { }
+//   if (!r.ok || !j.ok) { const e = new Error(j.error || 'network'); e.code = j.error || 'network'; throw e }
+//   return j
+// }
+const SB_URL = 'https://mykqxhgvjzseybsmumvi.supabase.co';
+const SB_KEY = 'sb_publishable_vk2O9C04smi-Nu0T0jqNJA_Abi80o4Y';
+const upd = b => ['update_lead', { p_lead_id: b.lead_id, p_token: b.token, p_ans: b.ans || {}, p_action: b.action || null }];
+const RPC = {
+  'lead.php': b => ['create_lead', { p_name: b.name, p_phone: b.phone, p_email: b.email || '', p_ans: b.ans || {}, p_page: b.page || '', p_hp: b.hp || '' }],
+  'lead_update.php': upd,
+  'lead-update.php': upd,
+  'slots.php': () => ['get_slots', {}],
+  'book.php': b => ['book_visit', { p_lead_id: b.lead_id, p_token: b.token, p_date: b.date, p_time: b.time, p_visitors: b.visitors }]
+};
 async function api(path, body) {
-  const r = await fetch(`${API}/${path}`, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+  const [fn, args] = RPC[path](body || {});
+  const r = await fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+    body: JSON.stringify(args)
+  });
   let j = {}; try { j = await r.json() } catch (e) { }
   if (!r.ok || !j.ok) { const e = new Error(j.error || 'network'); e.code = j.error || 'network'; throw e }
   return j
