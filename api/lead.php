@@ -61,4 +61,5 @@ if ($id) {
     $pdo->prepare('INSERT INTO leads (name,email,purpose,awareness,bhk,budget,timeline,funding,decision_maker,attracted,score,tag,token_hash,id,phone,source_page) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
         ->execute([...$f, $id, $phone, $page]);
 }
+sheet_sync($id);
 out(['ok' => true, 'lead_id' => $id, 'token' => $token, 'ref' => lead_ref($id), 'tag' => $tag]);

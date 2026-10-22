@@ -7,4 +7,5 @@ $l = lead_auth($in);
 if (($in['action'] ?? '') !== 'info_request') out(['ok' => false, 'error' => 'invalid_input'], 422);
 if ($l['status'] === 'in_progress')
     db()->prepare("UPDATE leads SET status='info_requested' WHERE id=?")->execute([$l['id']]);
+sheet_sync($l['id']);
 out(['ok' => true]);

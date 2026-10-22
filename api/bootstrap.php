@@ -88,6 +88,44 @@ function lead_auth(array $in): array {
     return $l;
 }
 
+// Best-effort push of one lead row to the Google Sheet webhook. Never throws —
+// a Sheets outage must not stop a lead from saving.
+function sheet_sync(string $leadId): void {
+    $c = cfg();
+    $url = $c['sheet_webhook_url'] ?? '';
+    if (!$url) return;
+    $s = db()->prepare('SELECT * FROM leads WHERE id = ?');
+    $s->execute([$leadId]);
+    $l = $s->fetch();
+    if (!$l) return;
+    $payload = [
+        'secret' => $c['sheet_secret'] ?? '',
+        'id' => $l['id'], 'ref' => lead_ref($l['id']), 'name' => $l['name'], 'phone' => $l['phone'],
+        'email' => $l['email'], 'purpose' => $l['purpose'], 'awareness' => $l['awareness'], 'bhk' => $l['bhk'],
+        'budget' => $l['budget'], 'timeline' => $l['timeline'], 'funding' => $l['funding'],
+        'decision_maker' => $l['decision_maker'], 'attracted' => $l['attracted'], 'score' => $l['score'],
+        'tag' => $l['tag'], 'status' => $l['status'], 'visit_date' => $l['visit_date'],
+        'visit_time' => $l['visit_time'], 'visitors' => $l['visitors'],
+        'created_at' => $l['created_at'], 'updated_at' => $l['updated_at'],
+    ];
+    try {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true, // Apps Script replies with a 302
+            CURLOPT_TIMEOUT => 4,
+        ]);
+        curl_exec($ch);
+        if (curl_errno($ch)) error_log('[shiv-kailasa] sheet_sync: ' . curl_error($ch));
+        curl_close($ch);
+    } catch (Throwable $e) {
+        error_log('[shiv-kailasa] sheet_sync: ' . $e);
+    }
+}
+
 // Bookable dates: tomorrow onwards, skipping closed weekdays and blocked dates.
 function open_dates(): array {
     $c = cfg();

@@ -38,4 +38,5 @@ try {
     if ($pdo->inTransaction()) $pdo->rollBack();
     throw $e;
 }
+sheet_sync($l['id']);
 out(['ok' => true, 'ref' => lead_ref($l['id'])]);
