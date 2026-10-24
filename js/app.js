@@ -1,10 +1,11 @@
 // Shiv Kailasa enquiry funnel. Contact step creates the lead; later answers autosave to the same record.
-const CFG = window.SK_CONFIG || {}, API = (CFG.API || 'api').replace(/\/$/, '');
+// Backend: Supabase (RPC functions). Order: 1) contact  2) why  3) purpose  4) bhk  5) budget
+const CFG = window.SK_CONFIG || {};
 const $ = id => document.getElementById(id);
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const Q = [
-  { k: 'why', t: 'What brings you to Shiv Kailasa? (pick any)', multi: 1, o: ['AIIMS / IIM location', 'MIHAN growth', 'Freehold land', 'Rental potential', 'Investment potential', 'Township & lifestyle'] },
   { k: 'contact' },
+  { k: 'why', t: 'What brings you to Shiv Kailasa? (pick any)', multi: 1, o: ['AIIMS / IIM location', 'MIHAN growth', 'Freehold land', 'Rental potential', 'Investment potential', 'Township & lifestyle'] },
   { k: 'purpose', t: 'What are you buying for?', o: ['Self-use|To live in', 'Investment|Rental & growth', 'Both|Live now, asset later'] },
   { k: 'bhk', t: 'Which home are you considering?', o: ['2 BHK|from ₹65L', '3 BHK|from ₹75L', 'Not sure yet'] },
   { k: 'budget', t: 'Your approximate budget?', o: ['₹60–70L', '₹70–85L', '₹85L–₹1Cr', '₹1Cr+'] }];
@@ -15,12 +16,8 @@ const store = {
   clear() { try { localStorage.removeItem('sk_lead') } catch (e) { } }
 };
 const persist = (done) => { if (L) store.set({ ...L, name: S.name, ans: S.ans, done: !!done }) };
-// async function api(path, body) {
-//   const r = await fetch(`${API}/${path}`, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
-//   let j = {}; try { j = await r.json() } catch (e) { }
-//   if (!r.ok || !j.ok) { const e = new Error(j.error || 'network'); e.code = j.error || 'network'; throw e }
-//   return j
-// }
+
+// ---- Supabase connection ----
 const SB_URL = 'https://mykqxhgvjzseybsmumvi.supabase.co';
 const SB_KEY = 'sb_publishable_vk2O9C04smi-Nu0T0jqNJA_Abi80o4Y';
 const upd = b => ['update_lead', { p_lead_id: b.lead_id, p_token: b.token, p_ans: b.ans || {}, p_action: b.action || null }];
@@ -42,6 +39,8 @@ async function api(path, body) {
   if (!r.ok || !j.ok) { const e = new Error(j.error || 'network'); e.code = j.error || 'network'; throw e }
   return j
 }
+// ---- end Supabase connection ----
+
 const MSG = { rate_limited: 'Too many attempts. Please wait a few minutes and try again.', slot_full: 'That slot was just taken. Please pick another.', invalid_input: 'Please check your details and try again.' };
 const msg = e => MSG[e.code] || 'Could not save. Check your connection and tap again.';
 const dlabel = d => new Date(d + 'T12:00:00+05:30').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
@@ -49,7 +48,8 @@ function bar() {
   const n = Q.length; $('bar').style.width = (Math.min(i, n) / n * 100) + '%';
   $('stepl').textContent = i < n ? `Step ${i + 1} of ${n}` : '';
 }
-function goBack() { i--; if (Q[i] && Q[i].k === 'contact' && L) i--; render() }
+// Contact step (i = 0) is the first step; once the lead exists, Back stops at the "why" step (i = 1).
+function goBack() { if (i <= 1) return; i--; render() }
 // Background autosave of one answer. Never blocks the UI; the last step re-sends everything.
 function sync(k) {
   if (!L) return;
@@ -71,7 +71,7 @@ function render() {
   if (!q) return result();
   if (q.k === 'contact') return contact();
   $('ft').textContent = 'Is Shiv Kailasa right for you?'; $('fs').textContent = '5 quick steps · about 60 seconds';
-  const back = i ? '<button type="button" class="back btn btn-outline-secondary mt-2" id="bk">← Back</button>' : '';
+  const back = i > 1 ? '<button type="button" class="back btn btn-outline-secondary mt-2" id="bk">← Back</button>' : '';
   const colCls = q.o.length <= 3 && !q.multi ? 'col-12' : 'col-6';
   let h = `<div class="qt fs-5 fw-bold mb-3">${q.t}</div><div class="row g-2">`;
   q.o.forEach((o, n) => { const [a, b] = o.split('|'); const id = `opt${n}`; h += `<div class="${colCls}"><input type="${q.multi ? 'checkbox' : 'radio'}" class="btn-check" name="q" id="${id}" value="${n}" autocomplete="off"${q.multi && (S.ans[q.k] || []).includes(n) ? ' checked' : ''}><label class="opt btn btn-outline-secondary w-100 text-start py-2" for="${id}">${a}${b ? `<small class="d-block text-secondary">${b}</small>` : ''}</label></div>` });
@@ -83,7 +83,7 @@ function render() {
     if (q.k === 'budget') { finish(); return }
     sync(q.k); i++; setTimeout(render, 180)
   });
-  if (q.multi) $('nx').onclick = () => { S.ans.why = [...$('fb').querySelectorAll('input:checked')].map(x => +x.value); persist(false); i++; render() };
+  if (q.multi) $('nx').onclick = () => { S.ans.why = [...$('fb').querySelectorAll('input:checked')].map(x => +x.value); persist(false); sync('why'); i++; render() };
   if ($('bk')) $('bk').onclick = goBack;
 }
 const val = k => { const q = Q.find(x => x.k === k), v = S.ans[k]; return Array.isArray(v) ? v.map(n => q.o[n].split('|')[0]).join(', ') : v == null ? '' : q.o[v].split('|')[0] };
@@ -95,17 +95,15 @@ function contact() {
  <label class="l form-label mt-3" for="email">Email (optional)</label><input id="email" type="email" class="form-control" autocomplete="email" maxlength="120">
  <input id="hp" class="hp visually-hidden" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
  <div class="hint form-text">We’ll call or WhatsApp only on this number, and use your details only for this enquiry. No spam.</div>
- <button type="button" id="go" class="btn btn-primary w-100 mt-3">Continue →</button><div class="err text-danger small mt-2" id="er"></div>
- <button type="button" id="bk" class="btn btn-outline-secondary w-100 mt-2">← Back</button>`;
-  $('bk').onclick = goBack;
+ <button type="button" id="go" class="btn btn-primary w-100 mt-3">Continue →</button><div class="err text-danger small mt-2" id="er"></div>`;
   $('go').onclick = async () => {
     const n = $('name').value.trim(), ph = $('phone').value.replace(/\D/g, '').replace(/^(91|0)(?=\d{10}$)/, ''), em = $('email').value.trim();
     if (n.length < 2 || !/^[6-9]\d{9}$/.test(ph)) { $('er').textContent = 'Please add your name and a valid 10-digit mobile number'; return }
     if (em && !/^\S+@\S+\.\S+$/.test(em)) { $('er').textContent = 'That email address doesn’t look right'; return }
     $('go').disabled = true; $('er').textContent = '';
     try {
-      // Lead is created (autosaved) here, together with the answer from step 1.
-      const j = await api('lead.php', { name: n, phone: ph, email: em, ans: { why: S.ans.why || [] }, page: location.href, hp: $('hp').value });
+      // Lead is created here (first step). Later answers autosave to the same record.
+      const j = await api('lead.php', { name: n, phone: ph, email: em, ans: {}, page: location.href, hp: $('hp').value });
       L = { id: j.lead_id, token: j.token, ref: j.ref }; S.name = n;
       persist(false); i++; render();
     } catch (e) { $('er').textContent = msg(e); $('go').disabled = false }
@@ -177,5 +175,5 @@ const saved = store.get();
 if (saved && saved.id) {
   L = { id: saved.id, token: saved.token, ref: saved.ref, tag: saved.tag }; S.name = saved.name; S.ans = saved.ans || {};
   if (saved.done) result();
-  else { i = S.ans.purpose == null ? 2 : S.ans.bhk == null ? 3 : 4; render() }
+  else { i = S.ans.why == null ? 1 : S.ans.purpose == null ? 2 : S.ans.bhk == null ? 3 : 4; render() }
 } else render();
