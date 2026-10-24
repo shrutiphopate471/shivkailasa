@@ -45,7 +45,10 @@ html {
 }
 
 .hero {
-    background: linear-gradient(135deg, #3b2410, #9a5b1e 60%, #d9a066)
+    background: linear-gradient(135deg, #3b2410, #9a5b1e 60%, #d9a066);
+    display: flex;
+    height: 95vh;
+    align-items: center;
 }
 
 .hero-overlay {
