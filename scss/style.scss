@@ -1,27 +1,27 @@
 // Compile: npm run build  ->  css/style.css
 
 // ---- Brand variable overrides, BEFORE the Bootstrap import ----
-$primary:               #9a5b1e;
-$success:               #2f6b3a;
-$body-bg:               #f6f3ee;
-$body-color:            #1f1b16;
-$body-secondary-color:  #6b6258;
-$body-secondary-bg:     #f3e8dc;
-$body-tertiary-bg:      #f3e8dc;
-$border-color:          #e2dbd1;
-$link-color:            $primary;
+$primary: #9a5b1e;
+$success: #2f6b3a;
+$body-bg: #f6f3ee;
+$body-color: #1f1b16;
+$body-secondary-color: #6b6258;
+$body-secondary-bg: #f3e8dc;
+$body-tertiary-bg: #f3e8dc;
+$border-color: #e2dbd1;
+$link-color: $primary;
 
 // dark-mode counterparts (feed Bootstrap's own [data-bs-theme="dark"] generation)
-$body-color-dark:           #f2ece4;
-$body-bg-dark:               #15120f;
+$body-color-dark: #f2ece4;
+$body-bg-dark: #15120f;
 $body-secondary-color-dark: #a89d90;
-$body-secondary-bg-dark:    #2b231b;
-$body-tertiary-bg-dark:     #2b231b;
-$border-color-dark:         #3a332b;
-$link-color-dark:           #d08a45;
+$body-secondary-bg-dark: #2b231b;
+$body-tertiary-bg-dark: #2b231b;
+$border-color-dark: #3a332b;
+$link-color-dark: #d08a45;
 
-$border-radius:         .625rem;
-$border-radius-lg:      .875rem;
+$border-radius: .625rem;
+$border-radius-lg: .875rem;
 $enable-negative-margins: true;
 $font-family-sans-serif: system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -52,7 +52,8 @@ html {
 }
 
 .hero-overlay {
-    background: rgba(0, 0, 0, .55)
+    // background: rgba(0, 0, 0, .55)
+    background: linear-gradient(135deg, #3b2410, #9a5b1e 60%, #d9a066);
 }
 
 .hero .hero-video {

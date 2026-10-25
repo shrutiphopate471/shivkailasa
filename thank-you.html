@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="robots" content="noindex">
+    <!-- Hidden until the page confirms a fresh booking; without JS go home -->
+    <style>
+        html {
+            visibility: hidden
+        }
+    </style>
+    <noscript>
+        <style>
+            html {
+                visibility: visible
+            }
+        </style>
+        <meta http-equiv="refresh" content="0;url=index.html">
+    </noscript>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Thank you | Shiv Kailasa, MIHAN Nagpur</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XQSCZK3P92');
+    </script>
+</head>
+
+<body>
+
+    <main class="ty">
+        <div class="container" style="max-width:560px">
+
+            <div class="text-center mb-4">
+                <div class="ty-check mx-auto mb-3" aria-hidden="true">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                </div>
+                <h1 class="fs-2 mb-2" id="tyh">Thank you.</h1>
+                <p class="text-secondary mb-0" id="typ">We have received your enquiry. Our team will contact you on
+                    WhatsApp shortly.</p>
+            </div>
+
+            <div class="card p-3" id="fb"></div>
+
+            <div class="card p-3 mt-3" id="nx">
+                <h2 class="h6 mb-3">What happens next</h2>
+                <ol class="mb-0 ps-3 small text-secondary">
+                    <li class="mb-2">We confirm your day and time on WhatsApp.</li>
+                    <li class="mb-2">We share the exact location pin, opposite AIIMS &amp; IIM, MIHAN.</li>
+                    <li>You visit the township and see the land, the location and the apartments.</li>
+                </ol>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="index.html" class="btn btn-outline-secondary">Back to Shiv Kailasa</a>
+            </div>
+
+            <p class="fine text-center small text-secondary mt-4 mb-0">Investment, appreciation and rental figures are
+                based on stated/existing-owner examples and are not guarantees of future returns.</p>
+        </div>
+    </main>
+
+    <script>
+        // Only reachable right after a booking. The pass is read ONCE and deleted, so a direct URL,
+        // refresh, or Back/Forward arrow finds nothing and goes home.
+        (function () {
+            var HOME = 'index.html';
+            var $ = function (id) { return document.getElementById(id) };
+            var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] }) };
+            var okUrl = function (u, p) { return typeof u === 'string' && u.indexOf(p) === 0 };
+
+            // Page restored from the back/forward cache: never show it again
+            window.addEventListener('pageshow', function (e) { if (e.persisted) location.replace(HOME) });
+
+            var d = null;
+            try { d = JSON.parse(sessionStorage.getItem('sk_thanks')); sessionStorage.removeItem('sk_thanks') } catch (e) { }
+            if (!d || !d.ref || !d.ts || Date.now() - d.ts > 120000) { location.replace(HOME); return }
+
+            try { gtag('event', 'generate_lead', { event_category: 'booking' }) } catch (e) { }
+            var first = String(d.name || '').split(' ')[0];
+            var ppl = d.v + (d.v === 4 ? '+' : '') + ' ' + (d.v === 1 ? 'person' : 'people');
+            if (first) $('tyh').textContent = 'Thank you, ' + first + '.';
+            $('typ').textContent = 'Your private site visit is booked. Our team will confirm on WhatsApp.';
+            $('fb').className = '';
+            $('fb').innerHTML = '<div class="ticket card"><div class="top card-header bg-primary text-white d-flex justify-content-between fw-bold"><span>SITE VISIT PASS</span><span>' + esc(d.ref) + '</span></div>'
+                + '<div class="bd card-body"><span class="hint form-text">Date &amp; time</span><b class="d-block fs-5">' + esc(d.date) + ' · ' + esc(d.time) + '</b><span class="hint form-text d-block mt-2">Guest</span><b class="d-block fs-5">' + esc(d.name) + ' · ' + ppl + '</b></div>'
+                + '<div class="ft card-footer small text-secondary">Shiv Kailasa, MIHAN, Nagpur · Opposite AIIMS &amp; IIM. Our team will confirm on WhatsApp and share the exact location pin.</div></div>'
+                + (okUrl(d.wa, 'https://wa.me/') ? '<a class="lnk pri btn btn-primary d-block mt-3" href="' + esc(d.wa) + '" target="_blank" rel="noopener noreferrer">💬 Send details on WhatsApp</a>' : '')
+                + (okUrl(d.cal, 'https://calendar.google.com/') ? '<a class="lnk btn btn-outline-primary d-block mt-2" href="' + esc(d.cal) + '" target="_blank" rel="noopener noreferrer">📅 Add to Google Calendar</a>' : '');
+            document.documentElement.style.visibility = 'visible';
+        })();
+    </script>
+</body>
+
+</html>

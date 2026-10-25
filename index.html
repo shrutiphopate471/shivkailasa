@@ -11,19 +11,19 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-XQSCZK3P92');
     </script>
 
     <script type='text/javascript'>
-        window.smartlook||(function(d) {
-            var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-            var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-            c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
-            })(document);
-            smartlook('init', '06f0d3b6e6bc3779dba4ddee40724fc90ed06b9c', { region: 'eu' });
+        window.smartlook || (function (d) {
+            var o = smartlook = function () { o.api.push(arguments) }, h = d.getElementsByTagName('head')[0];
+            var c = d.createElement('script'); o.api = new Array(); c.async = true; c.type = 'text/javascript';
+            c.charset = 'utf-8'; c.src = 'https://web-sdk.smartlook.com/recorder.js'; h.appendChild(c);
+        })(document);
+        smartlook('init', '06f0d3b6e6bc3779dba4ddee40724fc90ed06b9c', { region: 'eu' });
     </script>
 </head>
 
@@ -34,12 +34,32 @@
         <a href="#enquire" class="navbtn btn btn-primary rounded-pill">Book a visit</a>
     </header> -->
 
-    <section class="hero position-relative overflow-hidden text-white py-4 px-3">
+    <section class="hero position-relative overflow-hidden text-white align-items-center d-flex">
 
         <!-- <video class="hero-video" autoplay muted loop playsinline preload="auto">
-            <source src="images/IMG_4588.MP4" type="video/mp4">
+            <source src="images/IMG_4587.MP4" type="video/mp4">
         </video> -->
-        <!-- <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div> -->
+        <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"></video>
+        <script>
+            (function () {
+                var v = document.getElementById('heroVideo');
+                var mq = window.matchMedia('(max-width: 767px)');
+                var MOBILE = 'images/IMG_6703.mp4';   // small screen
+                var DESKTOP = 'images/IMG_4587.MP4';  // desktop / tablet
+                function pick() {
+                    var want = mq.matches ? MOBILE : DESKTOP;
+                    if (v.getAttribute('src') !== want) {
+                        v.src = want;
+                        v.load();
+                        var p = v.play();
+                        if (p && p.catch) p.catch(function () { });
+                    }
+                }
+                pick();
+                if (mq.addEventListener) mq.addEventListener('change', pick);
+            })();
+        </script>
+        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
         <div class="container">
             <div class="hgrid row g-4 align-items-start">
@@ -128,18 +148,45 @@
     </section>
 
     <section class="sec container my-5">
-        <div class="k small fw-bold text-uppercase text-primary mb-2">Before you choose a home</div>
-        <h2 class="fs-2 mb-3">Understand the land.</h2>
-        <p class="text-secondary">A property is not only the apartment you buy. It is the land beneath it, the location
-            around it, and the
-            development coming towards it. Shiv Kailasa stands on freehold land — a significant ownership distinction in
-            MIHAN, where many developments are structured on leasehold land.</p>
-        <div class="g3 row row-cols-1 row-cols-md-3 g-3 mt-2">
+        <div class="row row-cols-1 row-cols-md-2 g-4 align-items-center">
+            <div class="col">
+                <div class="k small fw-bold text-uppercase text-primary mb-2">Before you choose a home</div>
+                <h2 class="fs-2 mb-3">Understand the land.</h2>
+                <p class="text-secondary">A property is not only the apartment you buy. It is the land beneath it, the
+                    location
+                    around it, and the
+                    development coming towards it. Shiv Kailasa stands on freehold land — a significant ownership
+                    distinction in
+                    MIHAN, where many developments are structured on leasehold land.</p>
+
+            </div>
+            <div class="col">
+                <h2 class="fs-2 mb-3 mt-5">MahaRERA Registration no.</h2>
+                <div class="g3 row row-cols-1 row-cols-md-2 g-3">
+                    <div class="col">
+                        <div class="c card h-100 p-3">
+                            <div class="n small fw-bold text-primary mb-2">01</div>
+                            <h3 class="h5 mb-1">PHASE-I</h3>
+                            <p class="text-secondary small mb-0">P50500018424</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="c card h-100 p-3">
+                            <div class="n small fw-bold text-primary mb-2">02</div>
+                            <h3 class="h5 mb-1">PHASE-II</h3>
+                            <p class="text-secondary small mb-0">P50500029945</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="g3 row row-cols-1 row-cols-md-2 g-3 mt-2">
             <div class="col">
                 <div class="c card h-100 p-3">
                     <div class="n small fw-bold text-primary mb-2">EXACTLY OPPOSITE</div>
                     <h3 class="h5 mb-1">AIIMS Nagpur</h3>
-                    <p class="text-secondary small mb-0">Healthcare, medical professionals and the ecosystem around one
+                    <p class="text-secondary small mb-0">Healthcare, medical professionals and the ecosystem
+                        around one
                         of Nagpur’s most significant
                         institutions.</p>
                 </div>
@@ -148,7 +195,8 @@
                 <div class="c card h-100 p-3">
                     <div class="n small fw-bold text-primary mb-2">EXACTLY OPPOSITE</div>
                     <h3 class="h5 mb-1">IIM Nagpur</h3>
-                    <p class="text-secondary small mb-0">A premier institution bringing students, faculty and long-term
+                    <p class="text-secondary small mb-0">A premier institution bringing students, faculty and
+                        long-term
                         economic activity into the corridor.
                     </p>
                 </div>
@@ -157,12 +205,23 @@
                 <div class="c card h-100 p-3">
                     <div class="n small fw-bold text-primary mb-2">WITHIN</div>
                     <h3 class="h5 mb-1">MIHAN</h3>
-                    <p class="text-secondary small mb-0">One of Nagpur’s most important employment, business, technology
+                    <p class="text-secondary small mb-0">One of Nagpur’s most important employment, business,
+                        technology
+                        and infrastructure corridors.</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="c card h-100 p-3">
+                    <div class="n small fw-bold text-primary mb-2">WITHIN</div>
+                    <h3 class="h5 mb-1">MIHAN</h3>
+                    <p class="text-secondary small mb-0">One of Nagpur’s most important employment, business,
+                        technology
                         and infrastructure corridors.</p>
                 </div>
             </div>
         </div>
     </section>
+
 
     <section class="sec container my-5">
         <div class="k small fw-bold text-uppercase text-primary mb-2">Why Shiv Kailasa is different</div>
@@ -193,8 +252,8 @@
                 </div>
             </div>
         </div>
-        <img src="images/IMG_6628.JPG.jpg" class="img-fluid rounded-4 w-100 object-fit-cover mt-4"
-            style="max-height:420px" alt="Aerial view of Shiv Kailasa township garden and towers" loading="lazy">
+        <img src="images/IMG_6692.PNG" class="img-fluid rounded-4 w-100 object-fit-cover mt-4" style="max-height:420px"
+            alt="Aerial view of Shiv Kailasa township garden and towers" loading="lazy">
     </section>
 
     <section class="sec container my-5">
@@ -238,7 +297,7 @@
             </div>
             <div class="col">
                 <div class="card h-100">
-                    <img src="images/IMG_4797.PNG" class="card-img-top object-fit-cover"
+                    <img src="images/indoor.png" class="card-img-top object-fit-cover"
                         style="height:200px;object-position:top" alt="Indoor games room, Shiv Kailasa" loading="lazy">
                     <div class="card-body p-2 text-center">
                         <span class="small fw-semibold">🏓 Indoor games</span>
@@ -354,6 +413,54 @@
 
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <a href="#enquire" class="bv-btn" id="bookVisitBtn">Book Site Visit</a>
+    <div class="wa-widget" id="waWidget">
+        <div class="wa-popup" id="waPopup" role="dialog" aria-label="Chat on WhatsApp">
+            <button type="button" class="wa-close" id="waClose" aria-label="Close">&times;</button>
+            <p>👋 Hey there! Looking for the right home at Shiv Kailasa? Let’s talk!</p>
+            <a class="wa-start" id="waStart" href="#" target="_blank" rel="noopener">Start Chat</a>
+        </div>
+        <a class="wa-fab" id="waFab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+            <img src="images/WhatsApp.svg" alt="WhatsApp" width="60" height="60">
+        </a>
+    </div>
+    <script>
+        (function () {
+            var b = document.getElementById('bookVisitBtn');
+            var f = document.getElementById('enquire');
+            if (!b || !f) return;
+            b.addEventListener('click', function (e) {
+                e.preventDefault();
+                f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            // Hide the button while the form is already on screen
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (entries) {
+                    b.classList.toggle('bv-hide', entries[0].isIntersecting);
+                }, { threshold: 0.2 }).observe(f);
+            }
+        })();
+    </script>
+    <script>
+        (function () {
+            var num = String((window.SK_CONFIG && window.SK_CONFIG.WHATSAPP) || '7972096750').replace(/\D/g, '');
+            if (num.length === 10) num = '91' + num;
+            var text = 'Hi! I’d like to know more about Shiv Kailasa. Please guide me!';
+            var link = 'https://wa.me/' + num + '?text=' + encodeURIComponent(text);
+            document.getElementById('waFab').href = link;
+            document.getElementById('waStart').href = link;
+
+            var popup = document.getElementById('waPopup');
+            var closed = false;
+            try { closed = sessionStorage.getItem('sk_wa_closed') === '1'; } catch (e) { }
+            if (!closed) setTimeout(function () { popup.classList.add('show'); }, 3000);
+            document.getElementById('waClose').onclick = function () {
+                popup.classList.remove('show');
+                try { sessionStorage.setItem('sk_wa_closed', '1'); } catch (e) { }
+            };
+        })();
+    </script>
 </body>
 
 </html>
