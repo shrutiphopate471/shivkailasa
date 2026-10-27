@@ -76,7 +76,9 @@ async function finish() {
   $('fb').innerHTML = '<div class="hint form-text mt-3">Finding your best fit…</div>';
   try {
     const j = await api('lead_update.php', { lead_id: L.id, token: L.token, ans: { purpose: S.ans.purpose, bhk: S.ans.bhk, budget: S.ans.budget } });
-    L.tag = j.tag; persist(true); result();
+    L.tag = j.tag; persist(true);
+    gtag('event', 'funnel_complete', { event_category: 'enquiry', event_label: j.tag || 'unknown' });
+    result();
   } catch (e) {
     if (e.code === 'invalid_token') { store.clear(); location.reload(); return }
     $('fb').innerHTML = `<div class="err text-danger small mt-3">${esc(msg(e))}</div><button type="button" id="rt2" class="btn btn-primary w-100 mt-2">Try again</button><button type="button" id="bk" class="btn btn-outline-secondary w-100 mt-2">← Back</button>`;
@@ -85,6 +87,7 @@ async function finish() {
 }
 function render() {
   bar(); const q = Q[i];
+  if (q) gtag('event', 'quiz_step_view', { event_category: 'funnel', event_label: q.k, step_number: i + 1 });
   if (!q) return result();
   if (q.k === 'contact') return contact();
   $('ft').textContent = 'Is Shiv Kailasa right for you?'; $('fs').textContent = '5 quick steps · about 60 seconds';
@@ -114,7 +117,7 @@ function render() {
 const val = k => { const q = Q.find(x => x.k === k), v = S.ans[k]; return Array.isArray(v) ? v.map(n => q.o[n].split('|')[0]).join(', ') : v == null ? '' : q.o[v].split('|')[0] };
 function contact() {
   bar();
-  $('ft').textContent = 'Plan Your Private Visit'; $('fs').textContent = 'We’ll use your details only for this enquiry.';
+  $('ft').textContent = 'Plan Your Free Site Visit'; $('fs').textContent = 'We’ll use your details only for this enquiry.';
   $('fb').innerHTML = `<label class="l form-label mt-0" for="name">Full name</label><input id="name" type="text" data-recording-sensitive class="form-control" autocomplete="name" maxlength="80">
  <label class="l form-label mt-3" for="phone">Mobile number</label><div class="input-group"><span class="input-group-text">+91</span><input id="phone" type="tel" data-recording-sensitive class="form-control" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" placeholder="10-digit mobile number" autocomplete="tel-national"></div><div class="text-danger small mt-1" id="phn"></div>
  <label class="l form-label mt-3" for="email">Email</label><input id="email" type="email" data-recording-sensitive class="form-control" autocomplete="email" maxlength="120" required>
@@ -145,6 +148,16 @@ function contact() {
       // Lead is created here (first step). Later answers autosave to the same record.
       const j = await api('lead.php', { name: n, phone: ph, email: em, ans: {}, page: pageUrl(), hp: $('hp').value });
       L = { id: j.lead_id, token: j.token, ref: j.ref }; S.name = n;
+      // --- TRACKING: Lead created ---
+      gtag('event', 'generate_lead', {
+        event_category: 'enquiry',
+        event_label: 'contact_step',
+        value: 500,
+        currency: 'INR'
+      });
+      gtag('set', 'user_data', { email: em, phone_number: '+91' + ph });
+      // --- END TRACKING ---
+
       persist(false); i++; render();
     } catch (e) { $('er').textContent = msg(e); $('go').disabled = false }
   };
@@ -195,6 +208,7 @@ async function booking() {
   };
 }
 function ticket() {
+  gtag('event', 'book_site_visit', { event_category: 'booking', event_label: L.ref, value: 2000, currency: 'INR' });
   const { d, t, v } = slot, dl = dlabel(d.date), [h, m] = t.time.split(':').map(Number), p = n => String(n).padStart(2, '0'), day = d.date.replace(/-/g, ''), end = h * 60 + m + 90;
   const cal = 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Asia/Kolkata&text=' + encodeURIComponent('Site visit: Shiv Kailasa') + '&dates=' + day + 'T' + p(h) + p(m) + '00/' + day + 'T' + p(Math.floor(end / 60)) + p(end % 60) + '00&location=' + encodeURIComponent('Shiv Kailasa, MIHAN, Nagpur (opp. AIIMS & IIM)') + '&details=' + encodeURIComponent('Booking ' + L.ref);
   const text = ['Hello Shiv Kailasa Team,', 'I am interested in Shiv Kailasa properties.', 'Name: ' + S.name, 'Interested in: ' + (val('why') || val('bhk')), 'Home: ' + val('bhk'), 'Purpose: ' + val('purpose'), 'Budget: ' + val('budget'), 'Preferred Visit: ' + dl + ', ' + t.label, 'Booking: ' + L.ref, 'Please contact me regarding the property.'].join('\n');

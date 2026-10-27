@@ -4539,7 +4539,15 @@ fieldset:disabled .btn {
     overflow-y: auto
 }
 
+header img {
+    width: 130px;
+}
+
 @media(min-width: 576px) {
+    header img {
+        width: 110px;
+    }
+
     .navbar-expand-sm {
         flex-wrap: nowrap;
         justify-content: flex-start

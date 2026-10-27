@@ -182,7 +182,7 @@
                 </div>
             </div>
         </div>
-        <div class="g3 row row-cols-1 row-cols-md-2 g-3 mt-2">
+        <div class="g3 row row-cols-1 row-cols-md-3 g-3 mt-2">
             <div class="col">
                 <div class="c card h-100 p-3">
                     <div class="n small fw-bold text-primary mb-2">EXACTLY OPPOSITE</div>
@@ -212,15 +212,7 @@
                         and infrastructure corridors.</p>
                 </div>
             </div>
-            <div class="col">
-                <div class="c card h-100 p-3">
-                    <div class="n small fw-bold text-primary mb-2">WITHIN</div>
-                    <h3 class="h5 mb-1">MIHAN</h3>
-                    <p class="text-secondary small mb-0">One of Nagpur’s most important employment, business,
-                        technology
-                        and infrastructure corridors.</p>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -487,6 +479,35 @@
                 popup.classList.remove('show');
                 try { sessionStorage.setItem('sk_wa_closed', '1'); } catch (e) { }
             };
+
+            ['waFab', 'waStart'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.addEventListener('click', function () {
+                    gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: id });
+                });
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            document.querySelectorAll('a[href="#enquire"]').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    gtag('event', 'cta_click', {
+                        event_category: 'engagement',
+                        event_label: el.textContent.trim().slice(0, 50)
+                    });
+                });
+            });
+            var fired = {};
+            window.addEventListener('scroll', function () {
+                var pct = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+                [50, 75, 100].forEach(function (t) {
+                    if (pct >= t && !fired[t]) {
+                        fired[t] = true;
+                        gtag('event', 'scroll_depth', { event_category: 'engagement', percent_scrolled: t });
+                    }
+                });
+            }, { passive: true });
         })();
     </script>
 </body>

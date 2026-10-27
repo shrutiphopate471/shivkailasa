@@ -46,8 +46,16 @@
                     </svg>
                 </div>
                 <h1 class="fs-2 mb-2" id="tyh">Thank you.</h1>
-                <p class="text-secondary mb-0" id="typ">We have received your enquiry. Our team will contact you on
-                    WhatsApp shortly.</p>
+                <div class="text-secondary" id="typ">
+                    <p class="mb-2">Your private site visit has been confirmed.</p>
+                    <p class="mb-2">Our dedicated vehicle will pick you up from your doorstep and bring you to Shiv
+                        Kailasa, MIHAN for
+                        your private site visit.</p>
+                    <p class="mb-2">Your visit is now reserved. Our team will contact you shortly to confirm the pickup
+                        time and
+                        location.</p>
+                    <p class="mb-0 fw-semibold">— Team Shiv Kailasa</p>
+                </div>
             </div>
 
             <div class="card p-3" id="fb"></div>
@@ -90,7 +98,7 @@
             var first = String(d.name || '').split(' ')[0];
             var ppl = d.v + (d.v === 4 ? '+' : '') + ' ' + (d.v === 1 ? 'person' : 'people');
             if (first) $('tyh').textContent = 'Thank you, ' + first + '.';
-            $('typ').textContent = 'Your private site visit is booked. Our team will confirm on WhatsApp.';
+
             $('fb').className = '';
             $('fb').innerHTML = '<div class="ticket card"><div class="top card-header bg-primary text-white d-flex justify-content-between fw-bold"><span>SITE VISIT PASS</span><span>' + esc(d.ref) + '</span></div>'
                 + '<div class="bd card-body"><span class="hint form-text">Date &amp; time</span><b class="d-block fs-5">' + esc(d.date) + ' · ' + esc(d.time) + '</b><span class="hint form-text d-block mt-2">Guest</span><b class="d-block fs-5">' + esc(d.name) + ' · ' + ppl + '</b></div>'
