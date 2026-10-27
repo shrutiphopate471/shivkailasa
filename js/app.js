@@ -18,7 +18,7 @@ const pageUrl = () => {
 const Q = [
   { k: 'contact' },
   { k: 'why', t: 'What brings you to Shiv Kailasa? (pick any)', multi: 1, o: ['AIIMS / IIM location', 'MIHAN growth', 'Freehold land', 'Rental potential', 'Investment potential', 'Township & lifestyle'] },
-  { k: 'purpose', map: 1, t: 'What are you buying for?', o: ['Residential|To live in', 'Investment|Rental & growth',] },
+  { k: 'purpose', t: 'What are you buying for?', o: ['Residential|To live in', 'Investment|Rental & growth',] },
   { k: 'bhk', t: 'Which home are you considering?', o: ['2 BHK|from ₹65L', '3 BHK|from ₹75L', 'Not sure yet'] },
   { k: 'budget', t: 'Your approximate budget?', o: ['₹60–70L', '₹70–85L', '₹85L–₹1Cr', '₹1Cr+'] }];
 const S = { ans: {} }; let i = 0, slot = {}, L = null; // L = {id, token, ref, tag} from the server
@@ -92,26 +92,18 @@ function render() {
   if (q.k === 'contact') return contact();
   $('ft').textContent = 'Is Shiv Kailasa right for you?'; $('fs').textContent = '5 quick steps · about 60 seconds';
   const back = i > 1 ? '<button type="button" class="back btn btn-outline-secondary mt-2" id="bk">← Back</button>' : '';
-  const bkm = i > 1 ? '<button type="button" class="back btn btn-outline-secondary" id="bk">← Back</button>' : '';
-  let pick = S.ans[q.k];
   const colCls = q.o.length <= 3 && !q.multi ? 'col-12' : 'col-6';
   let h = `<div class="qt fs-5 fw-bold mb-3">${q.t}</div><div class="row g-2">`;
-  q.o.forEach((o, n) => { const [a, b] = o.split('|'); const id = `opt${n}`; h += `<div class="${colCls}"><input type="${q.multi ? 'checkbox' : 'radio'}" class="btn-check" name="q" id="${id}" value="${n}" autocomplete="off"${q.multi && (S.ans[q.k] || []).includes(n) ? ' checked' : ''}${q.map && pick === n ? ' checked' : ''}><label class="opt btn btn-outline-secondary w-100 text-start py-2" for="${id}">${a}${b ? `<small class="d-block text-secondary">${b}</small>` : ''}</label></div>` });
-  h += '</div>' + (q.multi ? '<button type="button" id="nx" class="btn btn-primary w-100 mt-3">Continue →</button>' : '') + (q.map ? `<div id="nb"></div><div class="err text-danger small mt-2" id="er3"></div><div class="d-flex gap-2 mt-3">${bkm}<button type="button" id="nx" class="btn btn-primary flex-grow-1">Next →</button></div>` : back);
+  q.o.forEach((o, n) => { const [a, b] = o.split('|'); const id = `opt${n}`; h += `<div class="${colCls}"><input type="${q.multi ? 'checkbox' : 'radio'}" class="btn-check" name="q" id="${id}" value="${n}" autocomplete="off"${q.multi && (S.ans[q.k] || []).includes(n) ? ' checked' : ''}><label class="opt btn btn-outline-secondary w-100 text-start py-2" for="${id}">${a}${b ? `<small class="d-block text-secondary">${b}</small>` : ''}</label></div>` });
+  h += '</div>' + (q.multi ? '<button type="button" id="nx" class="btn btn-primary w-100 mt-3">Continue →</button>' : '') + back;
   $('fb').innerHTML = h;
-  const showX = () => { if (pick === 0) nearby($('nb')); else if (pick === 1) invest($('nb')) }; // Residential -> Nearby, Investment -> calculator
   $('fb').querySelectorAll('input').forEach(x => x.onchange = () => {
-    if (q.map) { pick = +x.value; $('er3').textContent = ''; showX(); return }
     if (q.multi) return;
     S.ans[q.k] = +x.value; persist(false);
     if (q.k === 'budget') { finish(); return }
     sync(q.k); i++; setTimeout(render, 180)
   });
   if (q.multi) $('nx').onclick = () => { S.ans.why = [...$('fb').querySelectorAll('input:checked')].map(x => +x.value); persist(false); sync('why'); i++; render() };
-  if (q.map) {
-    showX();
-    $('nx').onclick = () => { if (pick == null) { $('er3').textContent = 'Please choose one option'; return } S.ans[q.k] = pick; persist(false); sync(q.k); i++; render() };
-  }
   if ($('bk')) $('bk').onclick = goBack;
 }
 const val = k => { const q = Q.find(x => x.k === k), v = S.ans[k]; return Array.isArray(v) ? v.map(n => q.o[n].split('|')[0]).join(', ') : v == null ? '' : q.o[v].split('|')[0] };
@@ -223,96 +215,6 @@ function ticket() {
   store.clear();
   if (ok) location.replace('thank-you.html');
   else { $('ft').textContent = 'You’re booked'; $('fb').innerHTML = `<p class="mb-0">Booking <b>${esc(L.ref)}</b> is confirmed. Our team will confirm on WhatsApp.</p>`; $('stepl').textContent = 'Booking confirmed' }
-}
-
-// =====================================================================
-// Nearby widget (shown on the "What are you buying for?" step). Pure frontend, no Supabase change.
-// =====================================================================
-// ---- EDIT THESE ----
-// cat: work | health | school | travel | city.  km = approx distance, car/bike = minutes, a = angle on the map (deg)
-const PLACES = [
-  { e: '✈️', n: 'Nagpur Airport', cat: 'travel', km: 5, car: 10, bike: 9, a: -130 },
-  { e: '💼', n: 'MIHAN SEZ & IT parks', cat: 'work', km: 3, car: 7, bike: 6, a: -35 },
-  { e: '🏥', n: 'AIIMS Nagpur (opposite)', cat: 'health', km: 0.5, car: 2, bike: 2, a: 35 },
-  { e: '🎓', n: 'IIM Nagpur (opposite)', cat: 'school', km: 0.5, car: 2, bike: 2, a: 145 },
-  { e: '🛣️', n: 'Samruddhi Expressway', cat: 'travel', km: 8, car: 15, bike: 18, a: 95 },
-  { e: '🏙️', n: 'Nagpur city centre', cat: 'city', km: 15, car: 30, bike: 35, a: -75 }
-];
-const CATS = [['all', 'All'], ['work', 'Work'], ['health', 'Health'], ['school', 'Schools'], ['travel', 'Travel'], ['city', 'City life']];
-const DAILY = [['🛒', 'Alma Mart supermarket'], ['🏦', 'SBI bank'], ['🧪', 'Pathology lab'], ['👕', 'Tumble Dry laundry'], ['🍛', 'Biryani'], ['🍔', 'Fast food'], ['🏨', 'Sayaji Group 4-star hotel']];
-const AMEN = [['🏊', 'Swimming pool'], ['🏋️', 'Fully equipped gym'], ['🏓', 'Indoor games'], ['🌳', '60% open space, only 40% built']];
-const INV_MIN = 65; // lakh, calculator starts here
-// ---- end EDIT ----
-
-let xCss = false;
-function xStyles() {
-  if (xCss) return; xCss = true;
-  const s = document.createElement('style');
-  s.textContent = `
-.xk .xchip{border-radius:50rem}
-.xk .xmap{position:relative;width:100%;aspect-ratio:100/70;border:1px solid var(--bs-border-color);border-radius:.75rem;overflow:hidden;background:var(--bs-tertiary-bg)}
-.xk .xmap svg{position:absolute;inset:0;width:100%;height:100%}
-.xk .xpin{position:absolute;transform:translate(-50%,-50%);width:2rem;height:2rem;border-radius:50%;border:2px solid var(--bs-primary);background:var(--bs-body-bg);font-size:.9rem;line-height:1;padding:0;display:flex;align-items:center;justify-content:center}
-.xk .xpin.on{background:var(--bs-primary)}
-.xk .xpin.dim{opacity:.25}
-.xk .xrow{display:flex;justify-content:space-between;gap:.5rem;width:100%;text-align:left}
-.xk input[type=range]{width:100%;accent-color:var(--bs-primary)}
-.xk .xbars{display:flex;align-items:flex-end;gap:8px;height:90px}
-.xk .xbars i{flex:1;background:var(--bs-primary);border-radius:6px 6px 0 0;opacity:.85}`;
-  document.head.appendChild(s);
-}
-function nearby(el) {
-  if (!el) return; xStyles(); el.className = 'xk';
-  const st = { tab: 'near', cat: 'all', mode: 'car', sel: -1 };
-  const tabs = [['near', '📍 Nearby'], ['daily', '☀️ Daily life'], ['amen', '✨ Amenities']];
-  const pill = (on, attr, label) => `<button type="button" class="btn btn-sm xchip ${on ? 'btn-primary' : 'btn-outline-secondary'}" ${attr}>${label}</button>`;
-  const rows = a => `<div class="d-flex flex-column gap-2">${a.map(x => `<div class="xrow border rounded-3 px-3 py-2 small"><span>${x[0]} ${x[1]}</span><span class="text-secondary">In township</span></div>`).join('')}</div>`;
-  function draw() {
-    let h = `<div class="d-flex flex-wrap gap-2 mt-3">${tabs.map(t => pill(st.tab === t[0], `data-tab="${t[0]}"`, t[1])).join('')}</div>`;
-    if (st.tab === 'near') {
-      const list = PLACES.filter(p => st.cat === 'all' || p.cat === st.cat);
-      const sel = PLACES[st.sel] && list.includes(PLACES[st.sel]) ? PLACES[st.sel] : null;
-      const mins = p => st.mode === 'car' ? p.car : p.bike;
-      const pos = p => { const r = Math.min(Math.max(mins(p) / 20 * 31, 13), 31), t = p.a * Math.PI / 180; return [50 + r * Math.cos(t), 35 + r * Math.sin(t)] };
-      const pins = PLACES.map((p, n) => { const [x, y] = pos(p); return `<button type="button" class="xpin btn${sel === p ? ' on' : ''}${list.includes(p) ? '' : ' dim'}" style="left:${x}%;top:${y / 0.7}%" data-pin="${n}" aria-label="${esc(p.n)}">${p.e}</button>` }).join('');
-      const route = sel ? (([x, y]) => `<line x1="50" y1="35" x2="${x}" y2="${y}" stroke="var(--bs-primary)" stroke-width=".8" stroke-dasharray="2 1.5"/>`)(pos(sel)) : '';
-      h += `<div class="d-flex flex-wrap gap-2 mt-2">${CATS.map(c => pill(st.cat === c[0], `data-cat="${c[0]}"`, c[1])).join('')}</div>
-<div class="xmap mt-2"><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M47 0 L49 70" stroke="currentColor" stroke-opacity=".18" stroke-width="2.6" fill="none"/><path d="M0 45 Q50 36 100 26" stroke="currentColor" stroke-opacity=".18" stroke-width="2.6" fill="none"/><circle cx="50" cy="35" r="15.5" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="1.6 1.6" stroke-width=".4"/><circle cx="50" cy="35" r="31" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="1.6 1.6" stroke-width=".4"/><g fill="currentColor" fill-opacity=".6" font-size="3"><text x="66.5" y="38">10 min</text><text x="82" y="38">20 min</text><text x="2" y="52">Wardha Road</text><text x="51" y="68.5">to Samruddhi Expwy</text></g>${route}</svg>
-<div class="btn-group btn-group-sm position-absolute top-0 end-0 m-2" style="z-index:2"><button type="button" class="btn ${st.mode === 'car' ? 'btn-primary' : 'btn-secondary'}" data-mode="car">🚗 Car</button><button type="button" class="btn ${st.mode === 'bike' ? 'btn-primary' : 'btn-secondary'}" data-mode="bike">🛵 Two-wheeler</button></div>
-<button type="button" class="xpin btn on" style="left:50%;top:50%;pointer-events:none" aria-label="Shiv Kailasa">★</button>${pins}</div>
-<div class="border rounded-3 p-2 mt-2"><b>${sel ? esc(sel.n) : 'Shiv Kailasa'}</b><div class="text-secondary small">${sel ? `~${sel.km} km · ${mins(sel)} min by ${st.mode === 'car' ? 'car' : 'two-wheeler'} from your new home` : 'Tap a pin or a place below to see the route from your new home.'}</div></div>
-<div class="d-flex flex-column gap-2 mt-2">${list.map(p => `<button type="button" class="btn btn-outline-secondary btn-sm xrow${sel === p ? ' active' : ''}" data-pin="${PLACES.indexOf(p)}"><span>${p.e} ${esc(p.n)}</span><span>~${p.km} km · ${mins(p)} min</span></button>`).join('')}</div>
-<div class="text-secondary small mt-2">Approximate distances, for illustration.</div>`;
-    } else h += `<div class="mt-2">${rows(st.tab === 'daily' ? DAILY : AMEN)}</div>`;
-    el.innerHTML = h;
-    el.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { st.tab = b.dataset.tab; draw() });
-    el.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { st.cat = b.dataset.cat; st.sel = -1; draw() });
-    el.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { st.mode = b.dataset.mode; draw() });
-    el.querySelectorAll('[data-pin]').forEach(b => b.onclick = () => { st.sel = +b.dataset.pin; draw() });
-  }
-  draw();
-}
-
-// Investment calculator (shown when "Investment" is chosen on the purpose step)
-function invest(el) {
-  if (!el) return; xStyles(); el.className = 'xk';
-  const st = { a: INV_MIN, g: 8, y: 5, r: 3 };
-  const fmt = v => v >= 100 ? (Math.round(v) / 100) + 'Cr' : (Math.round(v * 10) / 10) + 'L';
-  const sl = (id, label, min, max, step, cur) => `<div class="mt-3"><div class="d-flex justify-content-between"><label for="${id}">${label}</label><b id="${id}v"></b></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${cur}"></div>`;
-  const box = (id, t) => `<div class="col-6"><div class="border rounded-3 p-3 h-100 bg-body-tertiary"><div class="text-secondary small">${t}</div><b class="fs-5" id="${id}"></b></div></div>`;
-  el.innerHTML = `<div class="alert alert-secondary mt-3 mb-0 py-2"><b>Investment starts at ₹${INV_MIN}L</b></div>`
-    + sl('ia', 'Investment amount', INV_MIN, 200, 1, st.a) + sl('ig', 'Expected yearly appreciation', 0, 20, 1, st.g) + sl('iy', 'Holding period', 1, 15, 1, st.y) + sl('ir', 'Rental yield', 0, 6, .5, st.r)
-    + `<div class="row g-2 mt-3">${box('ov', 'Estimated value')}${box('og', 'Capital gain')}${box('orent', 'Rental income')}${box('ot', 'Total return')}</div>
-<div class="xbars mt-3" id="ib" aria-hidden="true"></div>
-<div class="text-secondary small mt-2">Illustrative only. Real estate returns are not guaranteed and depend on market conditions.</div>`;
-  const calc = () => {
-    const { a, g, y, r } = st, worth = a * Math.pow(1 + g / 100, y), gain = worth - a, rent = a * r / 100 * y;
-    $('iav').textContent = '₹' + fmt(a); $('igv').textContent = g + '%'; $('iyv').textContent = y + (y === 1 ? ' year' : ' years'); $('irv').textContent = r + '%';
-    $('ov').textContent = '₹' + fmt(worth); $('og').textContent = '₹' + fmt(gain); $('orent').textContent = '₹' + fmt(rent); $('ot').textContent = '₹' + fmt(gain + rent);
-    $('ib').innerHTML = Array.from({ length: 5 }, (_, n) => `<i style="height:${Math.round(a * Math.pow(1 + g / 100, y * (n + 1) / 5) / worth * 100)}%"></i>`).join('');
-  };
-  [['ia', 'a'], ['ig', 'g'], ['iy', 'y'], ['ir', 'r']].forEach(([id, k]) => $(id).oninput = () => { st[k] = +$(id).value; calc() });
-  calc();
 }
 
 // Resume: finished lead goes straight to booking, a half-filled one continues where it stopped.
