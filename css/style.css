@@ -14632,11 +14632,11 @@ html {
 }
 
 .big {
-    max-width: 17ch
+    max-width: 20ch;
 }
 
 .hero p {
-    max-width: 46ch
+    max-width: 52ch;
 }
 
 .fcard {
