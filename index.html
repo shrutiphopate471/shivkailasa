@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <title>Shiv Kailasa | Opposite AIIMS &amp; IIM, MIHAN Nagpur</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.css">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92"></script>
@@ -57,8 +57,9 @@
                         if (p && p.catch) p.catch(function () { });
                     }
                 }
-                pick();
                 if (mq.addEventListener) mq.addEventListener('change', pick);
+                if (document.readyState === 'complete') pick();
+                else window.addEventListener('load', pick);
             })();
         </script>
         <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
