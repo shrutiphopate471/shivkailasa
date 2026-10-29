@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://web-sdk.smartlook.com">
     <link rel="preconnect" href="https://mykqxhgvjzseybsmumvi.supabase.co">
     <link rel="stylesheet" href="css/style.min.css">
-
+    <link rel="preload" as="image" href="images/IMG_6692.webp" fetchpriority="high">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92"></script>
     <script>
@@ -36,19 +36,19 @@
                 <source src="images/IMG_4587.MP4" type="video/mp4">
             </video> -->
         <video class="hero-video" id="heroVideo" preload="none" autoplay muted loop playsinline
-            poster="images/hero-poster-desktop.webp"></video>
+            poster="images/IMG_6692.webp"></video>
         <script>
             (function () {
                 var v = document.getElementById('heroVideo');
                 var mq = window.matchMedia('(max-width: 767px)');
                 var MOBILE = 'images/hero-mobile.mp4';   // small screen
                 var DESKTOP = 'images/hero-desktop.mp4';  // desktop / tablet
-                var MOBILE_POSTER = 'images/hero-poster-mobile.webp';
-                var DESKTOP_POSTER = 'images/hero-poster-desktop.webp';
+                // var MOBILE_POSTER = 'images/hero-poster-mobile.webp';
+                // var DESKTOP_POSTER = 'images/hero-poster-desktop.webp';
                 function pick() {
                     var want = mq.matches ? MOBILE : DESKTOP;
                     if (v.getAttribute('src') !== want) {
-                        v.poster = mq.matches ? MOBILE_POSTER : DESKTOP_POSTER;
+                        // v.poster = mq.matches ? MOBILE_POSTER : DESKTOP_POSTER;
                         v.src = want;
                         v.load();
                         var p = v.play();
