@@ -7,20 +7,41 @@
     <meta name="description"
         content="Shiv Kailasa, a 30-acre freehold township opposite AIIMS and IIM Nagpur, MIHAN. 2 BHK from ₹65L, 3 BHK from ₹75L. Book a site visit.">
     <title>Shiv Kailasa | Opposite AIIMS &amp; IIM, MIHAN Nagpur</title>
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://web-sdk.smartlook.com">
+    <!-- <link rel="preconnect" href="https://www.googletagmanager.com"> -->
+    <!-- <link rel="preconnect" href="https://web-sdk.smartlook.com"> -->
     <link rel="preconnect" href="https://mykqxhgvjzseybsmumvi.supabase.co">
     <link rel="stylesheet" href="css/style.min.css">
-    <link rel="preload" as="image" href="images/hero-960.webp" media="(max-width:767px)" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero-720.webp" media="(max-width:767px)" fetchpriority="high">
     <link rel="preload" as="image" href="images/hero-1600.webp" media="(min-width:768px)" fetchpriority="high">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92"></script>
-    <script>
+    <!-- <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-XQSCZK3P92');
+    </script> -->
+    <script>
+        (function () {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-XQSCZK3P92');
+            var loaded = false;
+            function loadGA() {
+                if (loaded) return; loaded = true;
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92';
+                document.head.appendChild(s);
+            }
+            ['scroll', 'touchstart', 'click'].forEach(function (e) {
+                window.addEventListener(e, loadGA, { once: true, passive: true });
+            });
+            setTimeout(loadGA, 4000);
+        })();
     </script>
 </head>
 
@@ -41,8 +62,9 @@
         <!-- <video class="hero-video" id="heroVideo" preload="none" autoplay muted loop playsinline
             poster="images/IMG_6692.webp"></video> -->
         <picture>
-            <source media="(max-width:767px)" srcset="images/hero-960.webp">
-            <img class="hero-img" src="images/hero-1600.webp" alt="" fetchpriority="high" decoding="async">
+            <source media="(max-width:767px)" srcset="images/hero-720.webp">
+            <img class="hero-img" src="images/hero-1600.webp" alt="" fetchpriority="high" decoding="async" width="1600"
+                height="900">
         </picture>
         <video class="hero-video" id="heroVideo" preload="none" autoplay muted loop playsinline></video>
         <script>
