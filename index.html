@@ -4,12 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description"
+        content="Shiv Kailasa, a 30-acre freehold township opposite AIIMS and IIM Nagpur, MIHAN. 2 BHK from ₹65L, 3 BHK from ₹75L. Book a site visit.">
     <title>Shiv Kailasa | Opposite AIIMS &amp; IIM, MIHAN Nagpur</title>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://web-sdk.smartlook.com">
     <link rel="preconnect" href="https://mykqxhgvjzseybsmumvi.supabase.co">
     <link rel="stylesheet" href="css/style.min.css">
-    <link rel="preload" as="image" href="images/IMG_6692.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero-960.webp" media="(max-width:767px)" fetchpriority="high">
+    <link rel="preload" as="image" href="images/hero-1600.webp" media="(min-width:768px)" fetchpriority="high">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQSCZK3P92"></script>
     <script>
@@ -35,8 +38,13 @@
         <!-- <video class="hero-video" autoplay muted loop playsinline preload="auto">
                 <source src="images/IMG_4587.MP4" type="video/mp4">
             </video> -->
-        <video class="hero-video" id="heroVideo" preload="none" autoplay muted loop playsinline
-            poster="images/IMG_6692.webp"></video>
+        <!-- <video class="hero-video" id="heroVideo" preload="none" autoplay muted loop playsinline
+            poster="images/IMG_6692.webp"></video> -->
+        <picture>
+            <source media="(max-width:767px)" srcset="images/hero-960.webp">
+            <img class="hero-img" src="images/hero-1600.webp" alt="" fetchpriority="high" decoding="async">
+        </picture>
+        <video class="hero-video" id="heroVideo" preload="none" autoplay muted loop playsinline></video>
         <script>
             (function () {
                 var v = document.getElementById('heroVideo');
@@ -65,8 +73,7 @@
         <div class="container">
             <div class="hgrid row g-4 align-items-start">
                 <div class="col-12 col-lg-7">
-                    <img src="images/logo.webp" class="img-fluid d-block" alt="Shiv Kailasa" loading="lazy" width="auto"
-                        height="auto">
+                    <img src="images/logo.webp" class="img-fluid d-block" alt="Shiv Kailasa" width="auto" height="auto">
                     <span class="tag badge rounded-pill bg-white bg-opacity-25 text-white">Opp. AIIMS &amp; IIM · MIHAN,
                         Nagpur</span>
                     <h1 class="big display-5 mt-3 mb-2">The address of Nagpur’s next growth story.</h1>
@@ -128,7 +135,7 @@
                     <div class="n small fw-bold text-primary mb-2">FROM ₹65L+</div>
                     <div class="rounded-3 overflow-hidden mb-3 bg-white">
                         <img src="images/2bhk1.webp" class="img-fluid" alt="2 BHK isometric floor plan, Shiv Kailasa"
-                            loading="lazy" width="auto" height="auto">
+                            loading="lazy">
                     </div>
                     <h3 class="h5 mb-1">2 BHK</h3>
                     <p class="text-secondary small mb-0">Living, dining, kitchen, two bedrooms and a double-height
@@ -140,7 +147,7 @@
                     <div class="n small fw-bold text-primary mb-2">FROM ₹75L+</div>
                     <div class="rounded-3 overflow-hidden mb-3 bg-white">
                         <img src="images/3bhk1.webp" class="img-fluid" alt="3 BHK isometric floor plan, Shiv Kailasa"
-                            loading="lazy" width="auto" height="auto">
+                            loading="lazy">
                     </div>
                     <h3 class="h5 mb-1">3 BHK</h3>
                     <p class="text-secondary small mb-0">Master + guest bedrooms, large living/dining and a
@@ -248,7 +255,7 @@
             </div>
         </div>
         <img src="images/IMG_6692.webp" class="img-fluid rounded-4 w-100 object-fit-cover mt-4" style="max-height:420px"
-            alt="Aerial view of Shiv Kailasa township garden and towers" loading="lazy" width="auto" height="auto">
+            alt="Aerial view of Shiv Kailasa township garden and towers" loading="lazy">
     </section>
 
     <section class="sec container my-5">
@@ -275,7 +282,7 @@
             <div class="col">
                 <div class="card h-100">
                     <img src="images/pool.webp" class="card-img-top object-fit-cover" style="height:200px"
-                        alt="Swimming pool, Shiv Kailasa" loading="lazy" width="auto" height="auto">
+                        alt="Swimming pool, Shiv Kailasa" loading="lazy">
                     <div class="card-body p-2 text-center">
                         <span class="small fw-semibold">🏊 Swimming pool</span>
                     </div>
@@ -284,7 +291,7 @@
             <div class="col">
                 <div class="card h-100">
                     <img src="images/gym.webp" class="card-img-top object-fit-cover" style="height:200px"
-                        alt="Gymnasium, Shiv Kailasa" loading="lazy" width="auto" height="auto">
+                        alt="Gymnasium, Shiv Kailasa" loading="lazy">
                     <div class="card-body p-2 text-center">
                         <span class="small fw-semibold">🏋️ Fully equipped gym</span>
                     </div>
@@ -293,8 +300,7 @@
             <div class="col">
                 <div class="card h-100">
                     <img src="images/indoor.webp" class="card-img-top object-fit-cover"
-                        style="height:200px;object-position:top" alt="Indoor games room, Shiv Kailasa" loading="lazy"
-                        width="auto" height="auto">
+                        style="height:200px;object-position:top" alt="Indoor games room, Shiv Kailasa" loading="lazy">
                     <div class="card-body p-2 text-center">
                         <span class="small fw-semibold">🏓 Indoor games</span>
                     </div>
@@ -398,7 +404,7 @@
             <div class="row g-4 align-items-center">
                 <div class="col-12 col-md-3 text-center">
                     <img src="images/logo-1.webp" class="img-fluid" style="max-height:110px"
-                        alt="OM Shivam Buildcon Pvt. Ltd." loading="lazy" width="auto" height="auto">
+                        alt="OM Shivam Buildcon Pvt. Ltd." loading="lazy">
                 </div>
                 <div class="col-12 col-md-9">
                     <p class="text-secondary text-center text-md-start mb-3">OM Shivam Buildcon Pvt. Ltd. was founded
@@ -500,14 +506,20 @@
                     });
                 });
             });
-            var fired = {};
+
+            var fired = {}, ticking = false;
             window.addEventListener('scroll', function () {
-                var pct = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
-                [50, 75, 100].forEach(function (t) {
-                    if (pct >= t && !fired[t]) {
-                        fired[t] = true;
-                        gtag('event', 'scroll_depth', { event_category: 'engagement', percent_scrolled: t });
-                    }
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(function () {
+                    var pct = Math.round((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100);
+                    [50, 75, 100].forEach(function (t) {
+                        if (pct >= t && !fired[t]) {
+                            fired[t] = true;
+                            gtag('event', 'scroll_depth', { event_category: 'engagement', percent_scrolled: t });
+                        }
+                    });
+                    ticking = false;
                 });
             }, { passive: true });
         })();
