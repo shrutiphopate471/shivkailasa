@@ -488,10 +488,20 @@
                 try { sessionStorage.setItem('sk_wa_closed', '1'); } catch (e) { }
             };
 
+            // ['waFab', 'waStart'].forEach(function (id) {
+            //     var el = document.getElementById(id);
+            //     if (el) el.addEventListener('click', function () {
+            //         gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: id });
+            //     });
+            // });
             ['waFab', 'waStart'].forEach(function (id) {
                 var el = document.getElementById(id);
                 if (el) el.addEventListener('click', function () {
+                    // Google Analytics (GA4) — tracks WhatsApp button clicks
                     gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: id });
+                    // Meta Pixel — tells Meta someone clicked WhatsApp to chat
+                    // id tells us which button: 'waFab' = floating button, 'waStart' = popup button
+                    fbq('track', 'Contact', { content_name: 'WhatsApp Click' });
                 });
             });
         })();

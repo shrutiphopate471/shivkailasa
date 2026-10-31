@@ -76,8 +76,21 @@ async function finish() {
   $('fb').innerHTML = '<div class="hint form-text mt-3">Finding your best fit…</div>';
   try {
     const j = await api('lead_update.php', { lead_id: L.id, token: L.token, ans: { purpose: S.ans.purpose, bhk: S.ans.bhk, budget: S.ans.budget } });
+    // L.tag = j.tag; persist(true);
+    // gtag('event', 'funnel_complete', { event_category: 'enquiry', event_label: j.tag || 'unknown' });
+    // result();
     L.tag = j.tag; persist(true);
-    gtag('event', 'funnel_complete', { event_category: 'enquiry', event_label: j.tag || 'unknown' });
+    // Google Analytics (GA4) — fires when all 5 quiz steps are answered
+    gtag('event', 'funnel_complete', {
+      event_category: 'enquiry',
+      event_label: j.tag || 'unknown'
+    });
+    // Meta Pixel — tells Meta that someone completed the full quiz
+    // j.tag is the lead quality tag: Hot, Warm, or Nurture
+    fbq('track', 'CompleteRegistration', {
+      content_name: 'Quiz Complete',
+      status: j.tag || 'unknown'
+    });
     result();
   } catch (e) {
     if (e.code === 'invalid_token') { store.clear(); location.reload(); return }
@@ -140,14 +153,39 @@ function contact() {
       // Lead is created here (first step). Later answers autosave to the same record.
       const j = await api('lead.php', { name: n, phone: ph, email: em, ans: {}, page: pageUrl(), hp: $('hp').value });
       L = { id: j.lead_id, token: j.token, ref: j.ref }; S.name = n;
+      // // --- TRACKING: Lead created ---
+      // gtag('event', 'generate_lead', {
+      //   event_category: 'enquiry',
+      //   event_label: 'contact_step',
+      //   value: 500,
+      //   currency: 'INR'
+      // });
+      // gtag('set', 'user_data', { email: em, phone_number: '+91' + ph });
+      // // --- END TRACKING ---
+
+
       // --- TRACKING: Lead created ---
+      // Google Analytics (GA4) — sends lead event to GA4
       gtag('event', 'generate_lead', {
         event_category: 'enquiry',
         event_label: 'contact_step',
         value: 500,
         currency: 'INR'
       });
-      gtag('set', 'user_data', { email: em, phone_number: '+91' + ph });
+      // GA4 enhanced conversions — sends hashed user data for better attribution
+      gtag('set', 'user_data', {
+        email: em,
+        phone_number: '+91' + ph
+      });
+      // Meta Pixel — sends Lead event to Facebook/Instagram ads
+      // This tells Meta that someone submitted the contact form (name + phone + email)
+      // Meta uses this to find more people like this person
+      fbq('track', 'Lead', {
+        content_name: 'Shiv Kailasa Enquiry',
+        content_category: 'Real Estate',
+        value: 500,
+        currency: 'INR'
+      });
       // --- END TRACKING ---
 
       persist(false); i++; render();
@@ -200,8 +238,28 @@ async function booking() {
   };
 }
 function ticket() {
-  gtag('event', 'book_site_visit', { event_category: 'booking', event_label: L.ref, value: 2000, currency: 'INR' });
-  const { d, t, v } = slot, dl = dlabel(d.date), [h, m] = t.time.split(':').map(Number), p = n => String(n).padStart(2, '0'), day = d.date.replace(/-/g, ''), end = h * 60 + m + 90;
+  // --- TRACKING: Visit booked ---
+  // Google Analytics (GA4) — fires when someone confirms a site visit booking
+  gtag('event', 'book_site_visit', {
+    event_category: 'booking',
+    event_label: L.ref,
+    value: 2000,
+    currency: 'INR'
+  });
+  // Meta Pixel — tells Meta that someone booked a site visit
+  // This is the highest intent action on the site
+  // L.ref is the unique booking reference number
+  fbq('track', 'Schedule', {
+    content_name: 'Site Visit Booked',
+    value: 2000,
+    currency: 'INR'
+  });
+  // --- END TRACKING ---
+  const { d, t, v } = slot, dl = dlabel(d.date),
+    // function ticket() {
+    //   gtag('event', 'book_site_visit', { event_category: 'booking', event_label: L.ref, value: 2000, currency: 'INR' });
+    //   const { d, t, v } = slot, dl = dlabel(d.date),
+    [h, m] = t.time.split(':').map(Number), p = n => String(n).padStart(2, '0'), day = d.date.replace(/-/g, ''), end = h * 60 + m + 90;
   const cal = 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Asia/Kolkata&text=' + encodeURIComponent('Site visit: Shiv Kailasa') + '&dates=' + day + 'T' + p(h) + p(m) + '00/' + day + 'T' + p(Math.floor(end / 60)) + p(end % 60) + '00&location=' + encodeURIComponent('Shiv Kailasa, MIHAN, Nagpur (opp. AIIMS & IIM)') + '&details=' + encodeURIComponent('Booking ' + L.ref);
   const text = ['Hello Shiv Kailasa Team,', 'I am interested in Shiv Kailasa properties.', 'Name: ' + S.name, 'Interested in: ' + (val('why') || val('bhk')), 'Home: ' + val('bhk'), 'Purpose: ' + val('purpose'), 'Budget: ' + val('budget'), 'Preferred Visit: ' + dl + ', ' + t.label, 'Booking: ' + L.ref, 'Please contact me regarding the property.'].join('\n');
   // WhatsApp number: works with 10-digit (7972096750) or 12-digit (917972096750).
