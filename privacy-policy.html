@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Privacy Policy | Shiv Kailasa, MIHAN Nagpur</title>
+    <meta name="description"
+        content="How Shiv Kailasa collects, uses and protects your personal information when you visit shivkailasa.online or enquire about a home.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #15110e;
+            --band: #261c15;
+            --card: #1b1511;
+            --line: #3a2c21;
+            --ink: #f4eee6;
+            --muted: #cbbca8;
+            --gold: #c98a2f;
+            --btn: #a8611f;
+            --btn-hover: #bd7226;
+            --mark: #3d2c10;
+            --mark-ink: #f0c978;
+            --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            color-scheme: dark;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px);
+            scroll-behavior: smooth;
+            background: var(--bg)
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--muted);
+            font-family: var(--sans);
+            font-size: 1rem;
+            line-height: 1.65
+        }
+
+        a {
+            color: var(--gold);
+            text-underline-offset: 3px
+        }
+
+        a:focus-visible,
+        .btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
+            border-radius: 4px
+        }
+
+        strong {
+            color: var(--ink);
+            font-weight: 600
+        }
+
+        .wrap {
+            max-width: 66rem;
+            margin: 0 auto;
+            padding: 0 1.25rem
+        }
+
+        header.top {
+            background: linear-gradient(180deg, #2a1d14, var(--bg))
+        }
+
+        .top .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: .35rem;
+            text-decoration: none
+        }
+
+        .brand img {
+            display: block;
+            height: 44px;
+            width: auto
+        }
+
+        .brand small {
+            align-self: flex-start;
+            background: #f4eee6;
+            color: #1b1511;
+            font-size: .68rem;
+            font-weight: 700;
+            padding: .1rem .5rem;
+            border-radius: 4px
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--btn);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .92rem;
+            padding: .65rem 1.25rem;
+            border-radius: 8px;
+            white-space: nowrap
+        }
+
+        .btn:hover {
+            background: var(--btn-hover)
+        }
+
+        .btn.pill {
+            background: #fff;
+            color: #111;
+            border-radius: 8px;
+            font-weight: 700
+        }
+
+        .btn.pill:hover {
+            background: #f1e8dc
+        }
+
+        .eyebrow {
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin: 0 0 .5rem
+        }
+
+        .intro {
+            padding: 2.5rem 0 1.75rem
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 2.9rem);
+            line-height: 1.12;
+            margin: 0 0 1rem;
+            color: var(--ink);
+            font-weight: 600;
+            letter-spacing: -.015em
+        }
+
+        .intro p {
+            max-width: 40rem;
+            margin: .3rem 0
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 15rem minmax(0, 1fr);
+            gap: 2rem;
+            padding-bottom: 4rem;
+            align-items: start
+        }
+
+        nav.toc {
+            position: sticky;
+            top: 1.5rem;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 1.1rem 1.1rem .8rem;
+            font-size: .88rem
+        }
+
+        nav.toc p {
+            margin: 0 0 .6rem
+        }
+
+        nav.toc ol {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        nav.toc a {
+            display: block;
+            padding: .3rem 0;
+            color: var(--muted);
+            text-decoration: none
+        }
+
+        nav.toc a:hover {
+            color: var(--gold)
+        }
+
+        article {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 2rem 2.25rem;
+            min-width: 0
+        }
+
+        article section+section {
+            margin-top: 2.25rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--line)
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin: 0 0 .75rem;
+            color: var(--ink);
+            font-weight: 600;
+            line-height: 1.25
+        }
+
+        h3 {
+            font-size: .95rem;
+            margin: 1.25rem 0 .25rem;
+            color: var(--ink);
+            font-weight: 600
+        }
+
+        p {
+            margin: .6rem 0
+        }
+
+        ul {
+            padding-left: 1.25rem;
+            margin: .6rem 0
+        }
+
+        li {
+            margin: .3rem 0
+        }
+
+        li::marker {
+            color: var(--gold)
+        }
+
+        .fill {
+            background: var(--mark);
+            color: var(--mark-ink);
+            padding: 0 .3em;
+            border-radius: 3px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .93rem;
+            margin: .75rem 0
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: .65rem .75rem;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top
+        }
+
+        th {
+            font-size: .72rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 700
+        }
+
+        td:first-child {
+            color: var(--ink)
+        }
+
+        .scroll {
+            overflow-x: auto
+        }
+
+        footer {
+            background: var(--band);
+            text-align: center;
+            padding: 2.5rem 0 3rem;
+            font-size: .85rem
+        }
+
+        footer p {
+            margin: .5rem auto;
+            max-width: 44rem
+        }
+
+        footer .btn {
+            margin: .5rem 0 1rem
+        }
+
+        footer .rule {
+            border-top: 1px solid var(--line);
+            margin-top: 1.5rem;
+            padding-top: 1.25rem
+        }
+
+        @media (max-width:860px) {
+            .layout {
+                grid-template-columns: 1fr
+            }
+
+            nav.toc {
+                position: static
+            }
+
+            nav.toc ol {
+                columns: 2;
+                column-gap: 1.5rem
+            }
+
+            article {
+                padding: 1.5rem 1.15rem
+            }
+
+            .top .btn {
+                padding: .55rem .9rem;
+                font-size: .85rem
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+        }
+
+        /* Accordion (mobile only; JS adds .acc-on) */
+        .acc-btn {
+            all: unset;
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            cursor: default;
+            color: inherit
+        }
+
+        .acc-on .acc-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            padding: 1rem 1.15rem;
+            min-height: 3.25rem
+        }
+
+        .acc-on .acc-btn::after {
+            content: "";
+            flex: none;
+            width: .55rem;
+            height: .55rem;
+            border-right: 2px solid var(--gold);
+            border-bottom: 2px solid var(--gold);
+            transform: rotate(45deg);
+            transition: transform .2s;
+            margin-top: -.2rem
+        }
+
+        .acc-on section.open>h2 .acc-btn::after {
+            transform: rotate(-135deg);
+            margin-top: .2rem
+        }
+
+        .acc-on .acc-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: -2px;
+            border-radius: 8px
+        }
+
+        .acc-on article {
+            padding: 0;
+            overflow: hidden
+        }
+
+        .acc-on article section,
+        .acc-on article section+section {
+            margin: 0;
+            padding: 0
+        }
+
+        .acc-on article section+section {
+            border-top: 1px solid var(--line)
+        }
+
+        .acc-on article section>h2 {
+            margin: 0;
+            font-size: 1.05rem
+        }
+
+        .acc-on .acc-body {
+            padding: 0 1.15rem 1.15rem
+        }
+
+        .acc-on section:not(.open) .acc-body {
+            display: none
+        }
+
+        .acc-on nav.toc {
+            padding: 0
+        }
+
+        .acc-on nav.toc .acc-btn {
+            padding: .9rem 1.1rem;
+            color: var(--gold);
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase
+        }
+
+        .acc-on nav.toc.open .acc-btn::after {
+            transform: rotate(-135deg);
+            margin-top: .2rem
+        }
+
+        .acc-on nav.toc ol {
+            padding: 0 1.1rem .8rem;
+            columns: 1
+        }
+
+        .acc-on nav.toc:not(.open) ol {
+            display: none
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .acc-btn::after {
+                transition: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    \
+
+    <main class="wrap">
+        <div class="intro">
+            <p class="eyebrow">Legal</p>
+            <h1>Privacy Policy</h1>
+            <p>This policy explains what personal information we collect when you visit shivkailasa.online or enquire
+                about a home at Shiv Kailasa, how we use it, and the choices you have.</p>
+            <div class="text-center">
+                <a class="btn text-center" href="index.html">Book Site Visit</a>
+            </div>
+        </div>
+
+        <div class="layout">
+            <nav class="toc" aria-label="Contents">
+                <p class="eyebrow">On this page</p>
+                <ol>
+                    <li><a href="#who">Who we are</a></li>
+                    <li><a href="#collect">What we collect</a></li>
+                    <li><a href="#use">How we use it</a></li>
+                    <li><a href="#consent">Consent and lawful use</a></li>
+                    <li><a href="#share">Who we share it with</a></li>
+                    <li><a href="#cookies">Cookies and analytics</a></li>
+                    <li><a href="#retention">How long we keep it</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#rights">Your rights</a></li>
+                    <li><a href="#children">Children</a></li>
+                    <li><a href="#changes">Changes to this policy</a></li>
+                    <!-- <li><a href="#contact">Contact and grievances</a></li> -->
+                </ol>
+            </nav>
+
+            <article>
+                <section id="who">
+                    <h2>1. Who we are</h2>
+                    <p>Shiv Kailasa is a residential township by <strong>Om Shivam Buildcon Pvt. Ltd.</strong>, located
+                        opposite AIIMS and IIM Nagpur in MIHAN, Nagpur. Sales and marketing for the project are handled
+                        by <strong>Blue Sparrow Properties Pvt. Ltd.</strong>, an authorised partner of Om Shivam
+                        Buildcon Pvt. Ltd.</p>
+                    <p>In this policy, “we”, “us” and “our” mean Om Shivam Buildcon Pvt. Ltd. and Blue Sparrow
+                        Properties Pvt. Ltd., who together decide how your information is used for enquiries made
+                        through this website. The project is registered with MahaRERA: Phase I – P50500018424, Phase II
+                        – P50500029945.</p>
+                </section>
+
+                <section id="collect">
+                    <h2>2. What we collect</h2>
+                    <h3>Information you give us</h3>
+                    <ul>
+                        <li><strong>Enquiry and site visit forms:</strong> your name, mobile number, email address and
+                            any message you write.</li>
+                        <li><strong>“Is Shiv Kailasa right for you?” quiz:</strong> your answers to the quick questions,
+                            such as the home size and budget you are considering.</li>
+                        <li><strong>Chat and WhatsApp:</strong> your phone number, profile name and the messages you
+                            send us.</li>
+                        <li><strong>Calls and visits:</strong> details you share when our team speaks with you or when
+                            you visit the site.</li>
+                    </ul>
+                    <h3>Information collected automatically</h3>
+                    <ul>
+                        <li>Device and browser type, operating system, screen size and language.</li>
+                        <li>IP address and approximate location derived from it.</li>
+                        <li>Pages viewed, time spent, referring website or advertisement, and the buttons you tap.</li>
+                    </ul>
+                    <p>We do not ask for bank, card, Aadhaar or PAN details through this website. Please do not send
+                        them in the enquiry form or chat.</p>
+                </section>
+
+                <section id="use">
+                    <h2>3. How we use it</h2>
+                    <ul>
+                        <li>To respond to your enquiry and share pricing, floor plans and availability.</li>
+                        <li>To book, confirm and manage your site visit.</li>
+                        <li>To follow up by call, SMS, email or WhatsApp about Shiv Kailasa.</li>
+                        <li>To understand how the website is used and to improve it.</li>
+                        <li>To measure whether our advertising is working.</li>
+                        <li>To keep the website secure and to meet legal and regulatory obligations, including under
+                            RERA.</li>
+                    </ul>
+                    <p>We do not sell your personal information.</p>
+                </section>
+
+                <section id="consent">
+                    <h2>4. Consent and lawful use</h2>
+                    <p>We process your personal data with your consent, which you give when you submit a form, start a
+                        chat or message us on WhatsApp. We may also process it where the law permits, for example to
+                        comply with a legal obligation. We follow the Digital Personal Data Protection Act, 2023 and the
+                        Information Technology Act, 2000, along with the rules made under them.</p>
+                    <p>You can withdraw your consent at any time by contacting us using the details in section 12.
+                        Withdrawing consent does not affect processing that already took place.</p>
+                    <p>By submitting an enquiry, you agree that we may contact you even if your number is registered on
+                        the Do Not Disturb (DND/NDNC) list, because you asked us to get in touch. Tell us if you would
+                        rather not be contacted and we will stop.</p>
+                </section>
+
+                <section id="share">
+                    <h2>5. Who we share it with</h2>
+                    <div class="scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Recipient</th>
+                                    <th>Why</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Om Shivam Buildcon Pvt. Ltd. and Blue Sparrow Properties Pvt. Ltd.</td>
+                                    <td>To handle your enquiry, site visit and any booking.</td>
+                                </tr>
+                                <tr>
+                                    <td>Service providers</td>
+                                    <td>Website hosting, CRM, email, SMS, WhatsApp messaging, call and chat tools, and
+                                        analytics. They may use your data only to provide their service to us.</td>
+                                </tr>
+                                <tr>
+                                    <td>Banks and financial partners</td>
+                                    <td>Only if you ask for help with a home loan, and only what is needed for that.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Authorities</td>
+                                    <td>Where required by law, court order or a regulator such as MahaRERA.</td>
+                                </tr>
+                                <tr>
+                                    <td>Professional advisers</td>
+                                    <td>Lawyers, auditors and similar advisers who are bound by confidentiality.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Some of our providers may store data on servers outside India. Where this happens, we take
+                        reasonable steps to keep your data protected.</p>
+                </section>
+
+                <section id="cookies">
+                    <h2>6. Cookies and analytics</h2>
+                    <p>Cookies are small files stored on your device. We use them to keep the site working, remember
+                        your quiz progress, count visits, and measure advertising. We may use tools such as <span
+                            class="fill">Google Analytics / Meta Pixel / Google Ads — edit to match what is
+                            installed</span>.</p>
+                    <p>You can block or delete cookies in your browser settings. Some parts of the site may not work
+                        properly if you do.</p>
+                    <p>This website may link to or open third-party services such as WhatsApp, Google Maps or YouTube.
+                        Their privacy practices are their own, and we encourage you to read them.</p>
+                </section>
+
+                <section id="retention">
+                    <h2>7. How long we keep it</h2>
+                    <p>We keep enquiry data for as long as we need it to deal with your interest in Shiv Kailasa, and
+                        for up to <span class="fill">24</span> months after our last contact if you do not buy. If you
+                        become a customer, we keep your records for the period required by law. After that, we delete or
+                        anonymise the data.</p>
+                </section>
+
+                <section id="security">
+                    <h2>8. Security</h2>
+                    <p>We use reasonable technical and organisational safeguards, including encrypted connections
+                        (HTTPS) and limited internal access, to protect your information. No system is completely
+                        secure, so we cannot guarantee absolute security. If a breach affects your data, we will notify
+                        you and the authorities as the law requires.</p>
+                </section>
+
+                <section id="rights">
+                    <h2>9. Your rights</h2>
+                    <p>You can ask us to:</p>
+                    <ul>
+                        <li>Tell you what personal data we hold about you and how we use it.</li>
+                        <li>Correct or update data that is wrong or incomplete.</li>
+                        <li>Erase your data, unless we must keep it by law.</li>
+                        <li>Stop sending you calls, messages or emails.</li>
+                        <li>Withdraw your consent.</li>
+                        <li>Nominate another person to exercise these rights for you if you are unable to.</li>
+                    </ul>
+                    <p>To make a request, write to us at the address in section 12. We may need to confirm your identity
+                        first. If you are not satisfied with our response, you may approach the Data Protection Board of
+                        India once it is operational.</p>
+                </section>
+
+                <section id="children">
+                    <h2>10. Children</h2>
+                    <p>This website is meant for adults looking to buy property. We do not knowingly collect personal
+                        data of anyone under 18. If you believe a child has sent us their information, please contact us
+                        and we will delete it.</p>
+                </section>
+
+                <section id="changes">
+                    <h2>11. Changes to this policy</h2>
+                    <p>We may update this policy from time to time. The date at the top shows when it was last changed.
+                        If we make a significant change, we will post a notice on the website.</p>
+                </section>
+
+                <!-- <section id="contact">
+                    <h2>12. Contact and grievances</h2>
+                    <p>For questions, requests or complaints about your personal data, contact our grievance officer:
+                    </p>
+                    <p>
+                        <strong><span class="fill">Name of grievance officer</span></strong><br>
+                        Blue Sparrow Properties Pvt. Ltd.<br>
+                        Email: <span class="fill">privacy@yourdomain.com</span><br>
+                        Phone: <span class="fill">+91 XXXXX XXXXX</span><br>
+                        Address: <span class="fill">Registered office address, Nagpur, Maharashtra</span>
+                    </p>
+                    <p>We aim to acknowledge your request within 48 hours and resolve it within 30 days.</p>
+                </section> -->
+            </article>
+        </div>
+    </main>
+
+    <!-- <footer>
+  <div class="wrap">
+    <h2 style="margin:0 0 .5rem">Questions about your data?</h2>
+    <p>Write to our grievance officer using the details in section 12, or plan a visit to see Shiv Kailasa for yourself.</p>
+    <a class="btn pill" href="/#enquire">Plan a private site visit</a>
+    <p class="rule">Sale and Marketing by <strong>Blue Sparrow Properties Pvt. Ltd.</strong>, authorized partner of <strong>Om Shivam Buildcon Pvt. Ltd.</strong> RERA: P50500018424 (Phase I) / P50500029945 (Phase II)</p>
+    <p><a href="/terms-and-conditions">Terms and Conditions</a></p>
+    <p>&copy; <span id="yr">2026</span> Shiv Kailasa. All rights reserved.</p>
+  </div>
+</footer> -->
+    <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+    <script>
+        (function () {
+            var mq = window.matchMedia("(max-width:860px)");
+            var root = document.documentElement;
+            var sections = [].slice.call(document.querySelectorAll("article section"));
+            var toc = document.querySelector("nav.toc");
+
+            sections.forEach(function (sec, i) {
+                var h = sec.querySelector("h2");
+                var body = document.createElement("div");
+                body.className = "acc-body";
+                body.id = "acc-" + sec.id;
+                [].slice.call(sec.children).forEach(function (c) { if (c !== h) body.appendChild(c); });
+                sec.appendChild(body);
+                var btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "acc-btn";
+                btn.innerHTML = h.innerHTML;
+                btn.setAttribute("aria-controls", body.id);
+                h.innerHTML = "";
+                h.appendChild(btn);
+                btn.addEventListener("click", function () { if (mq.matches) setOpen(sec, !sec.classList.contains("open")); });
+            });
+
+            var tocBtn = null, tocList = toc.querySelector("ol");
+            (function () {
+                var label = toc.querySelector("p");
+                tocBtn = document.createElement("button");
+                tocBtn.type = "button";
+                tocBtn.className = "acc-btn";
+                tocBtn.textContent = label.textContent;
+                tocList.id = "toc-list";
+                tocBtn.setAttribute("aria-controls", "toc-list");
+                label.replaceWith(tocBtn);
+                tocBtn.addEventListener("click", function () { if (mq.matches) setToc(!toc.classList.contains("open")); });
+            })();
+
+            function setOpen(sec, open) {
+                sec.classList.toggle("open", open);
+                sec.querySelector(".acc-btn").setAttribute("aria-expanded", open ? "true" : "false");
+            }
+            function setToc(open) {
+                toc.classList.toggle("open", open);
+                tocBtn.setAttribute("aria-expanded", open ? "true" : "false");
+            }
+            function apply() {
+                var m = mq.matches;
+                root.classList.toggle("acc-on", m);
+                sections.forEach(function (sec, i) {
+                    var b = sec.querySelector(".acc-btn");
+                    b.tabIndex = m ? 0 : -1;
+                    if (m) { setOpen(sec, i === 0 || sec.classList.contains("open")); }
+                    else { sec.classList.remove("open"); b.removeAttribute("aria-expanded"); }
+                });
+                tocBtn.tabIndex = m ? 0 : -1;
+                if (m) { setToc(false); } else { toc.classList.remove("open"); tocBtn.removeAttribute("aria-expanded"); }
+            }
+            toc.addEventListener("click", function (e) {
+                var a = e.target.closest("a[href^='#']");
+                if (!a || !mq.matches) return;
+                var sec = document.getElementById(a.getAttribute("href").slice(1));
+                if (sec) { e.preventDefault(); setOpen(sec, true); setToc(false); sec.scrollIntoView(); history.replaceState(null, "", "#" + sec.id); }
+            });
+            function openFromHash() {
+                if (!mq.matches || !location.hash) return;
+                var sec = document.getElementById(location.hash.slice(1));
+                if (sec && sec.matches("article section")) { setOpen(sec, true); sec.scrollIntoView(); }
+            }
+            apply(); openFromHash();
+            window.addEventListener("hashchange", openFromHash);
+            (mq.addEventListener ? mq.addEventListener("change", apply) : mq.addListener(apply));
+        })();
+    </script>
+</body>
+
+</html>
