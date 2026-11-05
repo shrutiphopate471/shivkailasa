@@ -91,6 +91,12 @@ async function finish() {
       content_name: 'Quiz Complete',
       status: j.tag || 'unknown'
     });
+    oaiq(
+    "measure",
+    "custom",
+    { type: "custom" },
+    { custom_event_name: "funnel_complete" }
+    );
     result();
   } catch (e) {
     if (e.code === 'invalid_token') { store.clear(); location.reload(); return }
