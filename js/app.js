@@ -65,8 +65,8 @@ function bar() {
   const n = Q.length; $('bar').style.width = (Math.min(i, n) / n * 100) + '%';
   $('stepl').textContent = i < n ? `Step ${i + 1} of ${n}` : '';
 }
-// Contact step (i = 0) is the first step; once the lead exists, Back stops at the "why" step (i = 1).
-function goBack() { if (i <= 1) return; i--; render() }
+// Contact step (i = 0) is the first step; Back from any later step can return to it.
+function goBack() { if (i <= 0) return; i--; render() }
 // Background autosave of one answer. Never blocks the UI; the last step re-sends everything.
 function sync(k) {
   if (!L) return;
@@ -80,23 +80,27 @@ async function finish() {
     try {
       const j = await api('lead_update.php', { lead_id: L.id, token: L.token, ans: { purpose: S.ans.purpose, bhk: S.ans.bhk, budget: S.ans.budget } });
       L.tag = j.tag; persist(true);
-      // Google Analytics (GA4) — fires when all 5 quiz steps are answered
-      gtag('event', 'funnel_complete', {
-        event_category: 'enquiry',
-        event_label: j.tag || 'unknown'
-      });
-      // Meta Pixel — tells Meta that someone completed the full quiz
-      // j.tag is the lead quality tag: Hot, Warm, or Nurture
-      fbq('track', 'CompleteRegistration', {
-        content_name: 'Quiz Complete',
-        status: j.tag || 'unknown'
-      });
-      oaiq(
-      "measure",
-      "custom",
-      { type: "custom" },
-      { custom_event_name: "funnel_complete" }
-      );
+      // Tracking pixels run best-effort: a missing/blocked script must never mask a save that already succeeded.
+      try {
+        // Google Analytics (GA4) — fires when all 5 quiz steps are answered
+        gtag('event', 'funnel_complete', {
+          event_category: 'enquiry',
+          event_label: j.tag || 'unknown'
+        });
+        // Meta Pixel — tells Meta that someone completed the full quiz
+        // j.tag is the lead quality tag: Hot, Warm, or Nurture
+        fbq('track', 'CompleteRegistration', {
+          content_name: 'Quiz Complete',
+          status: j.tag || 'unknown'
+        });
+        // oaiq (OpenAI Ads pixel) has no loader script yet — no-op until one is added.
+        if (typeof oaiq === 'function') oaiq(
+          "measure",
+          "custom",
+          { type: "custom" },
+          { custom_event_name: "funnel_complete" }
+        );
+      } catch (e) { }
       result();
     } catch (e) {
       if (e.code === 'invalid_token') { store.clear(); location.reload(); return }
@@ -113,7 +117,7 @@ function render() {
   if (!q) return result();
   if (q.k === 'contact') return contact();
   $('ft').textContent = 'Is Shiv Kailasa right for you?'; $('fs').textContent = '5 quick steps · about 60 seconds';
-  const back = i > 1 ? '<button type="button" class="back btn btn-outline-secondary mt-2" id="bk">← Back</button>' : '';
+  const back = i > 0 ? '<button type="button" class="back btn btn-outline-secondary mt-2" id="bk">← Back</button>' : '';
   const colCls = q.o.length <= 3 && !q.multi ? 'col-12' : 'col-6';
   let h = `<div class="qt fs-5 fw-bold mb-3">${q.t}</div><div class="row g-2">`;
   q.o.forEach((o, n) => { const [a, b] = o.split('|'); const id = `opt${n}`; h += `<div class="${colCls}"><input type="${q.multi ? 'checkbox' : 'radio'}" class="btn-check" name="q" id="${id}" value="${n}" autocomplete="off"${q.multi && (S.ans[q.k] || []).includes(n) ? ' checked' : ''}><label class="opt btn btn-outline-secondary w-100 text-start py-2" for="${id}">${a}${b ? `<small class="d-block text-secondary">${b}</small>` : ''}</label></div>` });
@@ -138,6 +142,10 @@ function contact() {
  <input id="hp" class="hp visually-hidden" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
  <div class="hint form-text">We’ll call or WhatsApp only on this number, and use your details only for this enquiry. No spam.</div>
  <button type="button" id="go" class="btn btn-primary w-100 mt-3">Continue →</button><div class="err text-danger small mt-2" id="er"></div>`;
+  // Returning here via Back: restore what was typed, no need to re-enter it.
+  if (S.name) $('name').value = S.name;
+  if (S.phone) $('phone').value = S.phone;
+  if (S.email) $('email').value = S.email;
   // Phone: digits only, max 10. A number that does not start with 6-9 is not Indian: show a note.
   const NOTE = 'Only Indian mobile numbers are accepted. It should be 10 digits and start with 6, 7, 8 or 9.';
   $('phone').addEventListener('input', e => {
@@ -158,6 +166,10 @@ function contact() {
     if (!em) { $('er').textContent = 'Please enter your email address'; return }
     if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(em)) { $('er').textContent = 'That email address doesn’t look right'; return }
     $('go').disabled = true; $('er').textContent = '';
+    S.phone = ph; S.email = em;
+    // Reached via Back after the lead already exists: there's no update_lead field for
+    // contact details, so just keep going on the existing record instead of creating a duplicate.
+    if (L) { S.name = n; persist(false); i++; render(); return }
     try {
       // Lead is created here (first step). Later answers autosave to the same record.
       const j = await api('lead.php', { name: n, phone: ph, email: em, ans: {}, page: pageUrl(), hp: $('hp').value });
