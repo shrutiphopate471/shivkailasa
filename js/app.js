@@ -42,7 +42,7 @@ const RPC = {
 };
 async function api(path, body) {
   const [fn, args] = RPC[path](body || {});
-  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 15000);
+  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 25000);
   let r;
   try {
     r = await fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {
@@ -74,35 +74,38 @@ function sync(k) {
 }
 async function finish() {
   $('fb').innerHTML = '<div class="hint form-text mt-3">Finding your best fit…</div>';
-  try {
-    const j = await api('lead_update.php', { lead_id: L.id, token: L.token, ans: { purpose: S.ans.purpose, bhk: S.ans.bhk, budget: S.ans.budget } });
-    // L.tag = j.tag; persist(true);
-    // gtag('event', 'funnel_complete', { event_category: 'enquiry', event_label: j.tag || 'unknown' });
-    // result();
-    L.tag = j.tag; persist(true);
-    // Google Analytics (GA4) — fires when all 5 quiz steps are answered
-    gtag('event', 'funnel_complete', {
-      event_category: 'enquiry',
-      event_label: j.tag || 'unknown'
-    });
-    // Meta Pixel — tells Meta that someone completed the full quiz
-    // j.tag is the lead quality tag: Hot, Warm, or Nurture
-    fbq('track', 'CompleteRegistration', {
-      content_name: 'Quiz Complete',
-      status: j.tag || 'unknown'
-    });
-    oaiq(
-    "measure",
-    "custom",
-    { type: "custom" },
-    { custom_event_name: "funnel_complete" }
-    );
-    result();
-  } catch (e) {
-    if (e.code === 'invalid_token') { store.clear(); location.reload(); return }
-    $('fb').innerHTML = `<div class="err text-danger small mt-3">${esc(msg(e))}</div><button type="button" id="rt2" class="btn btn-primary w-100 mt-2">Try again</button><button type="button" id="bk" class="btn btn-outline-secondary w-100 mt-2">← Back</button>`;
-    $('rt2').onclick = finish; $('bk').onclick = goBack
-  }
+  // Network/timeout failures get one silent retry before we tell the user it failed —
+  // the save itself usually already went through, the response just didn't make it back in time.
+  const attempt = async (isRetry) => {
+    try {
+      const j = await api('lead_update.php', { lead_id: L.id, token: L.token, ans: { purpose: S.ans.purpose, bhk: S.ans.bhk, budget: S.ans.budget } });
+      L.tag = j.tag; persist(true);
+      // Google Analytics (GA4) — fires when all 5 quiz steps are answered
+      gtag('event', 'funnel_complete', {
+        event_category: 'enquiry',
+        event_label: j.tag || 'unknown'
+      });
+      // Meta Pixel — tells Meta that someone completed the full quiz
+      // j.tag is the lead quality tag: Hot, Warm, or Nurture
+      fbq('track', 'CompleteRegistration', {
+        content_name: 'Quiz Complete',
+        status: j.tag || 'unknown'
+      });
+      oaiq(
+      "measure",
+      "custom",
+      { type: "custom" },
+      { custom_event_name: "funnel_complete" }
+      );
+      result();
+    } catch (e) {
+      if (e.code === 'invalid_token') { store.clear(); location.reload(); return }
+      if (e.code === 'network' && !isRetry) return attempt(true);
+      $('fb').innerHTML = `<div class="err text-danger small mt-3">${esc(msg(e))}</div><button type="button" id="rt2" class="btn btn-primary w-100 mt-2">Try again</button><button type="button" id="bk" class="btn btn-outline-secondary w-100 mt-2">← Back</button>`;
+      $('rt2').onclick = finish; $('bk').onclick = goBack
+    }
+  };
+  attempt(false);
 }
 function render() {
   bar(); const q = Q[i];
